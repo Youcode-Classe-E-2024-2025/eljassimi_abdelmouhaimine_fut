@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <title>Football Formation</title>
+</head>
+<body class="relative h-screen bg-[#131313]">
+
+  <header class=" text-white">
+    <nav class="py-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="w-16 "><img src="src/assets/img/logo.png" alt=""></a>
+          <div class="flex space-x-8">
+            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Home</a>
+            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Formations</a>
+            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Players</a>
+            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Contact</a>
+          </div>
+        </div>
+      </nav>
+  </header>
+  <div class="relative h-full bg-cover bg-center" style="background-image: url('src/assets/img/bg.png');">
+    <div class="relative h-[800px] flex flex-col justify-center items-center">
+      <img type="image/svg+xml" class="w-full max-w-4xl" src="https://www.futbin.com/design2/img/static/field-bg.svg" alt="terrain">
+  
+      
+      <div class="absolute w-full max-w-4xl grid grid-rows-3 grid-cols-5 gap-y-16 pb-52">
+
+        
+        <div class="row-start-1 col-start-2 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
+        </div>
+        <div class="row-start-1 col-start-3 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
+        </div>
+        <div class="row-start-1 col-start-4 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
+        </div>
+  
+        
+        <div class="row-start-2 col-start-2 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+        </div>
+        <div class="row-start-2 col-start-3 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+        </div>
+        <div class="row-start-2 col-start-4 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+        </div>
+  
+
+        <div class="row-start-3 col-start-1 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+        </div>
+        <div class="row-start-3 col-start-2 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+        </div>
+        <div class="row-start-3 col-start-4 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+        </div>
+        <div class="row-start-3 col-start-5 flex justify-center">
+          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+        </div>
+
+      </div>
+
+      <div class="relative flex justify-center" style="top: -100px;">
+        <img src="src/assets/img/card.png" alt="Goalkeeper" class="h-24 w-16">
+      </div>      
+    </div>
+  
+    
+    <div class="absolute top-1/4 right-10 bg-black bg-opacity-75 p-6 rounded-lg text-white w-96 h-72">
+      <div class="mb-4 justify-center">
+        <h2 class="text-lg font-bold">FORMATION</h2>
+        <select class="w-full bg-gray-700 border border-gray-600 text-white rounded p-2">
+          <option>4-3-3</option>
+          <option>4-4-2</option>
+        </select>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold">Total Chemistry</h2>
+        <p class="text-xl font-semibold">100%</p>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
