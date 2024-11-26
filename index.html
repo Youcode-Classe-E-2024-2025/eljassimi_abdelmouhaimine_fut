@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.min.css">
     <title>Football Formation</title>
 </head>
-<body class="relative h-screen bg-[#131313]">
+<body class="relative h-screen bg-[#3a3a3a]">
 
   <header class=" text-white">
     <nav class="py-4">
@@ -24,53 +24,60 @@
         </div>
       </nav>
   </header>
-  <div class="relative h-full bg-cover bg-center " style="background-image: url('src/assets/img/bg.png');">
+  <div id="formation" class="relative h-full bg-cover bg-center " style="background-image: url('src/assets/img/bg.png');">
     <div class="relative h-[800px] flex flex-col justify-center items-center">
-      <img type="image/svg+xml" class="w-full max-w-4xl" src="https://www.futbin.com/design2/img/static/field-bg.svg" alt="terrain">
+      <img class="w-full max-w-4xl" src="https://www.futbin.com/design2/img/static/field-bg.svg" alt="terrain">
   
       
       <div class="absolute w-full max-w-4xl grid grid-rows-3 grid-cols-5 gap-y-16 pb-52">
 
         
-        <div id="card" data-position="LW" class="row-start-1 col-start-2 flex justify-center">
+        <div id="card" data-position="LW" class="row-start-1 col-start-2 flex justify-start ">
+          <img src="src/assets/img/card.png"  alt="Forward"  class="h-24 w-16 "/>
+        </div>        
+        
+        <div id="card" data-position="ST" class="row-start-1 col-start-3 flex justify-center ">
           <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
         </div>
-        <div id="card" data-position="ST" class="row-start-1 col-start-3 flex justify-center">
-          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
-        </div>
-        <div id="card" data-position="RW" class="row-start-1 col-start-4 flex justify-center">
+
+        <div id="card" data-position="RW" class="row-start-1 col-start-4 flex justify-end ">
           <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16">
         </div>
   
         
-        <div id="card" data-position="CM" class="row-start-2 col-start-2 flex justify-center">
-          <img src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+        <div id="card" data-position="CM" class="row-start-2 col-start-2 flex justify-center ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
-        <div id="card" data-position="CM" class="row-start-2 col-start-3 flex justify-center">
-          <img  src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+
+        <div id="card" data-position="CM" class="row-start-2 col-start-3 flex justify-center ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
-        <div id="card" data-position="CM" class="row-start-2 col-start-4 flex justify-center">
-          <img src="src/assets/img/card.png" alt="Midfielder" class="h-24 w-16">
+
+        <div id="card" data-position="CM" class="row-start-2 col-start-4 flex justify-center ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
   
 
-        <div id="card" data-position="LB" class="row-start-3 col-start-1 flex justify-center">
-          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+        <div id="card" data-position="LB" class="row-start-3 col-start-1 flex justify-center ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
-        <div id="card" data-position="CB" class="row-start-3 col-start-2 flex justify-center">
-          <img  src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+
+        <div id="card" data-position="CB" class="row-start-3 col-start-2 flex justify-end ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
-        <div id="card" data-position="CB" class="row-start-3 col-start-4 flex justify-center">
-          <img  src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+
+        <div id="card" data-position="CB" class="row-start-3 col-start-4 flex justify-start ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
-        <div id="card" data-position="RB" class="row-start-3 col-start-5 flex justify-center">
-          <img src="src/assets/img/card.png" alt="Defender" class="h-24 w-16">
+
+        <div id="card" data-position="RB" class="row-start-3 col-start-5 flex justify-center ">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
         </div>
 
       </div>
 
-      <div id="card" data-position="GK" class="relative flex justify-center" style="top: -100px;">
-        <img id="GK" src="src/assets/img/card.png" alt="Goalkeeper" class="h-24 w-16">
+      <div id="card" data-position="GK" class="relative flex justify-center " style="top: -100px;">
+          <img src="src/assets/img/card.png" alt="Forward" class="h-24 w-16 ">
       </div>      
     </div>
   
@@ -92,8 +99,8 @@
 
   <!-- create a modal to display players -->
 
-  <div id="allplayers" class="relative h-full bg-cover bg-center hidden" style="background-image: url('src/assets/img/bg.png');">
-    <div class="absolute  h-full rounded-lg shadow-lg p-8 w-[100%] ">
+  <div id="allplayers" class="hidden opacity-0 scale-80 transition-transform transition-opacity duration-300" style="background-image: url('src/assets/img/bg.png');">
+    <div class="absolute  h-full rounded-lg  p-8 w-[100%] ">
       <div class="text-white mb-4 w-[20%]">
         <h2 class="text-2xl font-bold">Search</h2>
       </div>
@@ -118,7 +125,10 @@
             <option>Nation</option>
           </select>
         </div>
-        <button id="addplayer" class="text-black font-bold bg-[#00ff03] hover:shadow-xl hover:shadow-[#00ff0421] w-36 rounded-sm h-10">ADD PLAYER</button>
+        <div >
+          <button id="addplayer" class="text-black font-bold bg-[#00ff03] hover:shadow-xl hover:shadow-[#00ff0421] w-36 rounded-sm h-10">ADD PLAYER</button>
+          <i id="closebtn" class="ri-close-line bg-[#00ff03] w-20 h-20 font-bold text-2xl"></i>
+        </div>
       </div>
 
       <!-- Cards -->

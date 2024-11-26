@@ -206,6 +206,7 @@ let newplayer = {
 
 const card = document.querySelectorAll("#card");
 const allplayers = document.getElementById("allplayers");
+const formation = document.getElementById("formation");
 
 const positions = {
   LW: 'LW',
@@ -218,22 +219,41 @@ const positions = {
   GK: 'GK'
 }
 
-card.forEach(cards =>{
-  cards.addEventListener('click',function(e){
-    Object.values(positions).forEach((value) =>{
-
-      if(cards.dataset.position === value){
-              let playersArray = [];
-                  data.players.forEach(element =>{
-                    if(element.position === value){
-                      playersArray.push(element);
-                    }
-                  })
-                  displayAllPlayers(playersArray);
-                  allplayers.classList.remove('hidden');
-        
+card.forEach(cards => {
+  cards.addEventListener('click', function (e) {
+    Object.values(positions).forEach((value) => {
+      if (cards.dataset.position === value) {
+        let playersArray = [];
+        data.players.forEach(element => {
+          if (element.position === value) {
+            playersArray.push(element);
           }
-    })
-  })
-})
+        });
 
+        displayAllPlayers(playersArray);
+
+        allplayers.classList.remove('hidden');
+        setTimeout(() => {
+          allplayers.classList.add('opacity-100', 'scale-100');
+          allplayers.classList.remove('opacity-0', 'scale-95');
+        }, 10);
+
+        formation.classList.add('hidden');
+      }
+    });
+  });
+});
+
+const closebtn = document.getElementById('closebtn');
+
+closebtn.addEventListener('click', function(){
+  allplayers.classList.add('hidden');
+  formation.classList.remove('hidden');
+  
+  allplayers.classList.add('hidden');
+        setTimeout(() => {
+          allplayers.classList.add('opacity-0', 'scale-95');
+          allplayers.classList.remove('opacity-100', 'scale-100');
+        }, 10);
+        formation.classList.remove('hidden');
+});
