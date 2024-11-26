@@ -648,6 +648,18 @@ video {
   top: 50%;
 }
 
+.right-0 {
+  right: 0px;
+}
+
+.top-20 {
+  top: 5rem;
+}
+
+.right-24 {
+  right: 6rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -711,6 +723,18 @@ video {
 
 .mt-12 {
   margin-top: 3rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-96 {
+  margin-top: 24rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 
 .block {
@@ -781,6 +805,14 @@ video {
   height: 2.5rem;
 }
 
+.h-\[480px\] {
+  height: 480px;
+}
+
+.max-h-\[600px\] {
+  max-height: 600px;
+}
+
 .w-16 {
   width: 4rem;
 }
@@ -849,6 +881,10 @@ video {
   width: 3rem;
 }
 
+.w-\[500px\] {
+  width: 500px;
+}
+
 .min-w-14 {
   min-width: 3.5rem;
 }
@@ -857,12 +893,21 @@ video {
   max-width: 56rem;
 }
 
+.max-w-7xl {
+  max-width: 80rem;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
 
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-4 {
+  --tw-translate-y: 1rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -942,6 +987,10 @@ video {
   gap: 0.75rem;
 }
 
+.gap-8 {
+  gap: 2rem;
+}
+
 .gap-y-16 {
   row-gap: 4rem;
 }
@@ -964,8 +1013,18 @@ video {
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
 .self-center {
   align-self: center;
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-x-hidden {
@@ -1134,6 +1193,11 @@ video {
   padding-right: 0.75rem;
 }
 
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 .pb-52 {
   padding-bottom: 13rem;
 }
@@ -1223,6 +1287,10 @@ video {
 
 .opacity-100 {
   opacity: 1;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .shadow-lg {
