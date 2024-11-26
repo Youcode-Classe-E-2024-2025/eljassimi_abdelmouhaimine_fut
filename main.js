@@ -204,21 +204,24 @@ let newplayer = {
 })
 
 
-const LW = document.getElementById("LW");
+const card = document.querySelectorAll("#card");
 const allplayers = document.getElementById("allplayers");
 
-LW.addEventListener('click', function(){
-  let LWplayers = [];
-  data.players.forEach(element =>{
-    if(element.position === 'LW'){
-      LWplayers.push(element);
+
+card.forEach(cards =>{
+  cards.addEventListener('click',function(e){
+    if(cards.dataset.position === "LW"){
+      let LWplayers = [];
+          data.players.forEach(element =>{
+            if(element.position === 'LW'){
+              LWplayers.push(element);
+            }
+          })
+          console.log('LWPLayers : ',LWplayers);
+          displayAllPlayers(LWplayers);
+          allplayers.classList.remove('hidden');
     }
   })
-  console.log('LWPLayers : ',LWplayers);
-  displayAllPlayers(LWplayers);
-  allplayers.classList.remove('hidden');
-});
-
-
+})
  
 
