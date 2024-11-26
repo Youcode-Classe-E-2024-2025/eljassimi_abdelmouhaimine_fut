@@ -249,11 +249,46 @@ const closebtn = document.getElementById('closebtn');
 closebtn.addEventListener('click', function(){
   allplayers.classList.add('hidden');
   formation.classList.remove('hidden');
-  
+
   allplayers.classList.add('hidden');
         setTimeout(() => {
           allplayers.classList.add('opacity-0', 'scale-95');
           allplayers.classList.remove('opacity-100', 'scale-100');
         }, 10);
         formation.classList.remove('hidden');
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const pace = document.getElementById('p');
+  let rating = document.getElementById('r');
+  const shooting = document.getElementById('s');
+  const passing = document.getElementById('pas');
+  const dribbling = document.getElementById('dri');
+  const defending = document.getElementById('def');
+  const physical = document.getElementById('phys');
+  let playerPosition = document.getElementById('playerPosition');
+  
+  console.log(rating);
+  playerPosition.addEventListener('change', function(e) {
+    e.preventDefault();
+    if(playerPosition.value === 'GK') {
+      
+      pace.innerText = 'Diving';
+      shooting.innerText = 'Handling';
+      passing.innerText = 'Kicking';
+      dribbling.innerText = 'Reflexes';
+      defending.innerText = 'Speed';
+      physical.innerText = 'Positioning';
+    }else{
+      pace.innerText = 'Pace';
+      shooting.innerText = 'Shooting';
+      passing.innerText = 'Passing';
+      dribbling.innerText = 'Dribbling';
+      defending.innerText = 'Defending';
+      physical.innerText = 'Physical';
+
+    }
+  });
 });
