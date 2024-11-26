@@ -27,6 +27,7 @@ console.log('dataaaaa : ', dataplayers);
 let players = document.getElementById("players");
 
 function displayAllPlayers(dataplayers){
+  players.innerHTML = ``;
     dataplayers.forEach(element => {
         if(element.position != 'GK'){
     players.innerHTML += `
@@ -105,4 +106,119 @@ function displayAllPlayers(dataplayers){
   });
 }
 displayAllPlayers(dataplayers);
+
+let addplayer = document.getElementById('addplayer');
+let PlayerModal = document.getElementById('PlayerModal');
+let closeModal = document.getElementById('closeModal');
+
+addplayer.addEventListener('click',function(){
+  PlayerModal.classList.remove('hidden');
+})
+closeModal.addEventListener('click', function(){
+  PlayerModal.classList.add('hidden');
+})
+
+let playerName = document.getElementById('playerName');
+let playerPhoto = document.getElementById('playerPhoto');
+let playerPosition = document.getElementById('playerPosition');
+let playerNationality = document.getElementById('playerNationality');
+let playerFlag = document.getElementById('playerFlag');
+let playerClub = document.getElementById('playerClub');
+let playerLogo = document.getElementById('playerLogo');
+let playerRating = document.getElementById('playerRating');
+let playerPace = document.getElementById('playerPace');
+let playerShooting = document.getElementById('playerShooting');
+let playerPassing = document.getElementById('playerPassing');
+let playerDribbling = document.getElementById('playerDribbling');
+let playerDefending = document.getElementById('playerDefending');
+let playerPhysical = document.getElementById('playerPhysical');
+
+
+let addplayerbtn = document.getElementById('addplayerbtn');
+
+
+let playerPhotoBase64 = "";
+let playerFlagBase64 = "";
+let playerLogoBase64 = "";
+
+playerPhoto.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      playerPhotoBase64 = e.target.result;
+      console.log("Base64 String:", playerPhotoBase64);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+playerFlag.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      playerFlagBase64 = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+playerLogo.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      playerLogoBase64 = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+
+addplayerbtn.addEventListener('click', function(e){
+  e.preventDefault();
+let newplayer = {
+        name: playerName.value,
+        photo: playerPhotoBase64,
+        position: playerPosition.value,
+        nationality: playerNationality.value,
+        flag: playerFlagBase64,
+        club: playerClub.value,
+        logo: playerLogoBase64,
+        rating: playerRating.value,
+        pace: playerPace.value,
+        shooting: playerShooting.value,
+        passing: playerPassing.value,
+        dribbling: playerDribbling.value,
+        defending: playerDefending.value,
+        physical: playerPhysical.value
+      }
+
+
+        data.players.push(newplayer);
+        localStorage.setItem("players", JSON.stringify(data));
+        dataplayers = data.players;
+        displayAllPlayers(dataplayers)
+        PlayerModal.classList.add('hidden');
+})
+
+
+const LW = document.getElementById("LW");
+const allplayers = document.getElementById("allplayers");
+
+LW.addEventListener('click', function(){
+  let LWplayers = [];
+  data.players.forEach(element =>{
+    if(element.position === 'LW'){
+      LWplayers.push(element);
+    }
+  })
+  console.log('LWPLayers : ',LWplayers);
+  displayAllPlayers(LWplayers);
+  allplayers.classList.remove('hidden');
+});
+
+
+ 
 
