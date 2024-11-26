@@ -120,7 +120,6 @@ closeModal.addEventListener('click', function(){
 
 let playerName = document.getElementById('playerName');
 let playerPhoto = document.getElementById('playerPhoto');
-let playerPosition = document.getElementById('playerPosition');
 let playerNationality = document.getElementById('playerNationality');
 let playerFlag = document.getElementById('playerFlag');
 let playerClub = document.getElementById('playerClub');
@@ -178,29 +177,51 @@ playerLogo.addEventListener("change", function (event) {
 
 addplayerbtn.addEventListener('click', function(e){
   e.preventDefault();
-let newplayer = {
-        name: playerName.value,
-        photo: playerPhotoBase64,
-        position: playerPosition.value,
-        nationality: playerNationality.value,
-        flag: playerFlagBase64,
-        club: playerClub.value,
-        logo: playerLogoBase64,
-        rating: playerRating.value,
-        pace: playerPace.value,
-        shooting: playerShooting.value,
-        passing: playerPassing.value,
-        dribbling: playerDribbling.value,
-        defending: playerDefending.value,
-        physical: playerPhysical.value
-      }
-
-
-        data.players.push(newplayer);
-        localStorage.setItem("players", JSON.stringify(data));
-        dataplayers = data.players;
-        displayAllPlayers(dataplayers)
-        PlayerModal.classList.add('hidden');
+  if(playerPosition.value != 'GK'){
+    let newplayer = {
+            name: playerName.value,
+            photo: playerPhotoBase64,
+            position: playerPosition.value,
+            nationality: playerNationality.value,
+            flag: playerFlagBase64,
+            club: playerClub.value,
+            logo: playerLogoBase64,
+            rating: playerRating.value,
+            pace: playerPace.value,
+            shooting: playerShooting.value,
+            passing: playerPassing.value,
+            dribbling: playerDribbling.value,
+            defending: playerDefending.value,
+            physical: playerPhysical.value
+          }
+            data.players.push(newplayer);
+            localStorage.setItem("players", JSON.stringify(data));
+            dataplayers = data.players;
+            displayAllPlayers(dataplayers)
+            PlayerModal.classList.add('hidden');
+  }else{
+          let newgoalkeeper = {
+            name: playerName.value,
+            photo: playerPhotoBase64,
+            position: playerPosition.value,
+            nationality: playerNationality.value,
+            flag: playerFlagBase64,
+            club: playerClub.value,
+            logo: playerLogoBase64,
+            rating: playerRating.value,
+            diving: playerPace.value,
+            handling: playerShooting.value,
+            kicking: playerPassing.value,
+            reflexes: playerDribbling.value,
+            speed: playerDefending.value,
+            positioning: playerPhysical.value
+          }
+            data.players.push(newgoalkeeper);
+            localStorage.setItem("players", JSON.stringify(data));
+            dataplayers = data.players;
+            displayAllPlayers(dataplayers)
+            PlayerModal.classList.add('hidden');
+  }
 })
 
 
@@ -262,7 +283,6 @@ closebtn.addEventListener('click', function(){
 
 document.addEventListener('DOMContentLoaded', function() {
   const pace = document.getElementById('p');
-  let rating = document.getElementById('r');
   const shooting = document.getElementById('s');
   const passing = document.getElementById('pas');
   const dribbling = document.getElementById('dri');
@@ -270,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const physical = document.getElementById('phys');
   let playerPosition = document.getElementById('playerPosition');
   
-  console.log(rating);
   playerPosition.addEventListener('change', function(e) {
     e.preventDefault();
     if(playerPosition.value === 'GK') {
