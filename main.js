@@ -207,21 +207,33 @@ let newplayer = {
 const card = document.querySelectorAll("#card");
 const allplayers = document.getElementById("allplayers");
 
+const positions = {
+  LW: 'LW',
+  ST: 'ST',
+  RW: 'RW',
+  CM: 'CM',
+  LB: 'LB',
+  CB: 'CB',
+  RB: 'RB',
+  GK: 'GK'
+}
 
 card.forEach(cards =>{
   cards.addEventListener('click',function(e){
-    if(cards.dataset.position === "LW"){
-      let LWplayers = [];
-          data.players.forEach(element =>{
-            if(element.position === 'LW'){
-              LWplayers.push(element);
-            }
-          })
-          console.log('LWPLayers : ',LWplayers);
-          displayAllPlayers(LWplayers);
-          allplayers.classList.remove('hidden');
-    }
+    Object.values(positions).forEach((value) =>{
+
+      if(cards.dataset.position === value){
+              let playersArray = [];
+                  data.players.forEach(element =>{
+                    if(element.position === value){
+                      playersArray.push(element);
+                    }
+                  })
+                  displayAllPlayers(playersArray);
+                  allplayers.classList.remove('hidden');
+        
+          }
+    })
   })
 })
- 
 
