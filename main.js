@@ -22,7 +22,7 @@ async function fetchPlayers() {
 fetchPlayers();
 
 dataplayers = data.players;
-console.log('dataaaaa : ', dataplayers);
+
 
 let players = document.getElementById("players");
 
@@ -31,7 +31,7 @@ function displayAllPlayers(dataplayers){
     dataplayers.forEach(element => {
         if(element.position != 'GK'){
     players.innerHTML += `
-      <div class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+      <div id="cardsplayer" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
             <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
               ${element.rating}
             </div>
@@ -67,7 +67,7 @@ function displayAllPlayers(dataplayers){
     `
   }else{
     players.innerHTML += `
-    <div class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+    <div id="cardsplayer" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
           <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
             ${element.rating}
           </div>
@@ -101,9 +101,11 @@ function displayAllPlayers(dataplayers){
               </div>
          </div>
   `
-
+  
   }
+
   });
+  addCardClickListeners();
 }
 displayAllPlayers(dataplayers);
 
@@ -146,7 +148,6 @@ playerPhoto.addEventListener("change", function (event) {
     const reader = new FileReader();
     reader.onload = function (e) {
       playerPhotoBase64 = e.target.result;
-      console.log("Base64 String:", playerPhotoBase64);
     };
     reader.readAsDataURL(file);
   }
@@ -199,7 +200,7 @@ addplayerbtn.addEventListener('click', function (e) {
 
   rejectname.innerHTML = ``; rejectclub.innerHTML = ``;  rejectphoto.innerHTML = ``;  rejectlogo.innerHTML = ``;  rejectflag.innerHTML = ``;
   rejectpower.innerHTML = ``;  rejectnationality.innerHTML = ``;
-  
+
   if (!name || /[0-9]/.test(name)) {
     rejectname.innerHTML += `<p class="text-red-600">Name incorrect</p>`
     return;
@@ -236,9 +237,10 @@ addplayerbtn.addEventListener('click', function (e) {
       return;
     }
   }
-
+    // idd  =  data.players.length + 1;
   if (playerPosition.value !== 'GK') {
     let newplayer = {
+      id : data.players.length + 1,
       name: playerName.value,
       photo: playerPhotoBase64,
       position: playerPosition.value,
@@ -298,9 +300,14 @@ const positions = {
   RB: 'RB',
   GK: 'GK'
 }
-
+let cardPos;
+let currentTarget;
 card.forEach(cards => {
   cards.addEventListener('click', function (e) {
+    currentTarget = e.currentTarget;
+    cardPos = e.currentTarget.dataset.position;
+    console.log(cardPos);
+    console.log(currentTarget);
     Object.values(positions).forEach((value) => {
       if (cards.dataset.position === value) {
         let playersArray = [];
@@ -338,8 +345,6 @@ closebtn.addEventListener('click', function(){
         formation.classList.remove('hidden');
 });
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
   const pace = document.getElementById('p');
   const shooting = document.getElementById('s');
@@ -372,20 +377,49 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function validateForm(e) {
-  e.preventDefault();
+function addCardClickListeners() {
+  const cardsplayer = document.querySelectorAll("#cardsplayer");
+  cardsplayer.forEach(card => {
+    card.addEventListener('click', function(e) {
+      let Idset = e.target.parentElement.parentElement.dataset.id;
+      console.log('iddd : ', parseInt(Idset));
+      let newobj;
+      data.players.forEach(p=>{
+        if(p.id === parseInt(Idset)){
+          console.log("player id",p.id);
+          newobj = p;
+        }
+      })
+      console.log(newobj);
 
-  if (name === '') {
-    alert('Name must not be empty and should not contain numbers.');
-    return false;
-  }
-  const powers = [rating, pace, shooting, passing, dribbling, defending, physical];
-  powers.forEach(element=>{
-    if (power === '' || isNaN(power) || power < 0 || power > 100) {
-      alert('All power values must be numbers between 0 and 100.');
-      return false;
-    }
-  alert('Player added successfully!');
-  return true;
+       currentTarget.innerHTML = ``;
+       currentTarget.innerHTML = `
+        <div class="relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+            <!-- Player Rating -->
+            <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
+              ${newobj.rating}
+            </div>
+            <!-- Player Position -->
+            <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
+              ${newobj.position}
+            </div>
+
+            <!-- Player Image and Info -->
+            <div class="flex flex-col items-center">
+              <img id="photo" src="${newobj.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
+
+              <!-- Player Name -->
+              <p id="name" class="text-[8px] font-bold text-center mt-1">
+                ${newobj.name}
+              </p>
+            </div>
+            <div class="flex items-center justify-center mt-1 space-x-1">
+              <img id="flag" src="${newobj.flag}" alt="Flag" class="w-2 h-2">
+              <img id="logo" src="${newobj.logo}" alt="Logo" class="w-2 h-2">
+            </div>
+          </div>
+       `
+    });
   });
+  
 }
