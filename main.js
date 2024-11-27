@@ -419,6 +419,8 @@ function addCardClickListeners() {
             </div>
           </div>
        `
+       allplayers.classList.add('hidden');
+       formation.classList.remove('hidden');
     });
   });
   
