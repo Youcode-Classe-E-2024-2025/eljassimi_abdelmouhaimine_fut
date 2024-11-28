@@ -1,124 +1,7 @@
-let data = [];
-
-async function fetchPlayers() {
-    let storedData = localStorage.getItem('players');
-    if (storedData) {
-        data = JSON.parse(storedData);
-    } else {
-        try {
-            const response = await fetch('\players.json');
-            const fetchedData = await response.json();
-            if (fetchedData) {
-                data = fetchedData;
-                localStorage.setItem("players", JSON.stringify(data));
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            
-        }
-    }
-}
-
-fetchPlayers();
-
-dataplayers = data.players;
-
-
-let players = document.getElementById("players");
-
-function displayAllPlayers(dataplayers){
-  players.innerHTML = ``;
-    dataplayers.forEach(element => {
-        if(element.position != 'GK'){
-    players.innerHTML += `
-      <div id="cardsplayer" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-            <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
-              ${element.rating}
-            </div>
-            <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
-            ${element.position}
-            </div>
-            <div class="flex flex-col items-center mt-12">
-              <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
-              <h1 id="name" class="text-xl font-bold">${element.name}</h1>
-              <div class="flex items-center">
-                <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
-                <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
-              </div>
-            </div>
-            <div class="flex flex-col items-center space-y-1">
-              <div class="flex justify-around w-full px-4">
-                <span  class="text-sm text-black">PAC</span>
-                <span  class="text-sm text-black">SHO</span>
-                <span  class="text-sm text-black">KIC</span>
-                <span  class="text-sm text-black">REF</span>
-                <span  class="text-sm text-black">SPE</span>
-                <span  class="text-sm text-black">POS</span>
-              </div>
-              <div class="flex justify-around w-full px-4 pb-6">
-              <span id="pace" class="text-sm font-bold text-black">${element.pace}</span>
-              <span id="shooting" class="text-sm font-bold text-black">${element.shooting}</span>
-              <span id="passing" class="text-sm font-bold text-black">${element.passing}</span>
-              <span id="dribbling" class="text-sm font-bold text-black">${element.dribbling}</span>
-              <span id="defending" class="text-sm font-bold text-black">${element.defending}</span>
-              <span id="physical" class="text-sm font-bold text-black">${element.physical}</span>
-            </div>
-           </div>
-    `
-  }else{
-    players.innerHTML += `
-    <div id="cardsplayer" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-          <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
-            ${element.rating}
-          </div>
-          <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
-          ${element.position}
-          </div>
-          <div class="flex flex-col items-center mt-12">
-            <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
-            <h1 id="name" class="text-xl font-bold">${element.name}</h1>
-            <div class="flex items-center">
-              <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
-              <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
-            </div>
-          </div>
-          <div class="flex flex-col items-center space-y-1">
-            <div class="flex justify-around w-full px-4">
-              <span  class="text-sm text-black">DIV</span>
-              <span  class="text-sm text-black">HAN</span>
-              <span  class="text-sm text-black">PAS</span>
-              <span  class="text-sm text-black">DRI</span>
-              <span  class="text-sm text-black">DEF</span>
-              <span  class="text-sm text-black">PHY</span>
-            </div>
-            <div class="flex justify-around w-full px-4 pb-6">
-                <span id="pace" class="text-sm font-bold text-black">${element.diving}</span>
-                <span id="shooting" class="text-sm font-bold text-black">${element.handling}</span>
-                <span id="passing" class="text-sm font-bold text-black">${element.kicking}</span>
-                <span id="dribbling" class="text-sm font-bold text-black">${element.reflexes}</span>
-                <span id="defending" class="text-sm font-bold text-black">${element.speed}</span>
-                <span id="physical" class="text-sm font-bold text-black">${element.positioning}</span>
-              </div>
-         </div>
-  `
-  
-  }
-
-  });
-  addCardClickListeners();
-}
-displayAllPlayers(dataplayers);
-
 let addplayer = document.getElementById('addplayer');
 let PlayerModal = document.getElementById('PlayerModal');
 let closeModal = document.getElementById('closeModal');
 
-addplayer.addEventListener('click',function(){
-  PlayerModal.classList.remove('hidden');
-})
-closeModal.addEventListener('click', function(){
-  PlayerModal.classList.add('hidden');
-})
 
 let playerName = document.getElementById('playerName');
 let playerPhoto = document.getElementById('playerPhoto');
@@ -141,6 +24,135 @@ let addplayerbtn = document.getElementById('addplayerbtn');
 let playerPhotoBase64 = "";
 let playerFlagBase64 = "";
 let playerLogoBase64 = "";
+
+
+const card = document.querySelectorAll("#card");
+const allplayers = document.getElementById("allplayers");
+const formation = document.getElementById("formation");
+
+const cardsplayer = document.querySelectorAll("#cardsplayer");
+
+let data = [];
+
+async function fetchPlayers() {
+    let storedData = localStorage.getItem('players');
+    if (storedData) {
+        data = JSON.parse(storedData);
+    } else {
+        try {
+            const response = await fetch('./players.json');
+            const fetchedData = await response.json();
+            if (fetchedData) {
+                data = fetchedData;
+                localStorage.setItem("players", JSON.stringify(data));
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            
+        }
+    }
+}
+
+fetchPlayers();
+
+let dataplayers = data.players;
+console.log(dataplayers);
+
+
+
+let players = document.getElementById("players");
+
+function displayAllPlayers(dataplayers){
+  players.innerHTML = ``;
+    dataplayers.forEach(element => {
+        if(element.position != 'GK'){
+            players.innerHTML += `
+              <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+                    <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
+                      ${element.rating}
+                    </div>
+                    <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
+                    ${element.position}
+                    </div>
+                    <div class="flex flex-col items-center mt-12">
+                      <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
+                      <h1 id="name" class="text-xl font-bold">${element.name}</h1>
+                      <div class="flex items-center">
+                        <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
+                        <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
+                      </div>
+                    </div>
+                    <div class="flex flex-col items-center space-y-1">
+                      <div class="flex justify-around w-full px-4">
+                        <span  class="text-sm text-black">PAC</span>
+                        <span  class="text-sm text-black">SHO</span>
+                        <span  class="text-sm text-black">KIC</span>
+                        <span  class="text-sm text-black">REF</span>
+                        <span  class="text-sm text-black">SPE</span>
+                        <span  class="text-sm text-black">POS</span>
+                      </div>
+                      <div class="flex justify-around w-full px-4 pb-6">
+                      <span id="pace" class="text-sm font-bold text-black">${element.pace}</span>
+                      <span id="shooting" class="text-sm font-bold text-black">${element.shooting}</span>
+                      <span id="passing" class="text-sm font-bold text-black">${element.passing}</span>
+                      <span id="dribbling" class="text-sm font-bold text-black">${element.dribbling}</span>
+                      <span id="defending" class="text-sm font-bold text-black">${element.defending}</span>
+                      <span id="physical" class="text-sm font-bold text-black">${element.physical}</span>
+                    </div>
+                   </div>
+            `
+          }else{
+            players.innerHTML += `
+            <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+                  <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
+                    ${element.rating}
+                  </div>
+                  <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
+                  ${element.position}
+                  </div>
+                  <div class="flex flex-col items-center mt-12">
+                    <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
+                    <h1 id="name" class="text-xl font-bold">${element.name}</h1>
+                    <div class="flex items-center">
+                      <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
+                      <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-center space-y-1">
+                    <div class="flex justify-around w-full px-4">
+                      <span  class="text-sm text-black">DIV</span>
+                      <span  class="text-sm text-black">HAN</span>
+                      <span  class="text-sm text-black">PAS</span>
+                      <span  class="text-sm text-black">DRI</span>
+                      <span  class="text-sm text-black">DEF</span>
+                      <span  class="text-sm text-black">PHY</span>
+                    </div>
+                    <div class="flex justify-around w-full px-4 pb-6">
+                        <span id="pace" class="text-sm font-bold text-black">${element.diving}</span>
+                        <span id="shooting" class="text-sm font-bold text-black">${element.handling}</span>
+                        <span id="passing" class="text-sm font-bold text-black">${element.kicking}</span>
+                        <span id="dribbling" class="text-sm font-bold text-black">${element.reflexes}</span>
+                        <span id="defending" class="text-sm font-bold text-black">${element.speed}</span>
+                        <span id="physical" class="text-sm font-bold text-black">${element.positioning}</span>
+                      </div>
+                 </div>
+          `
+
+  }
+
+  });
+  // addCardClickListeners();
+}
+displayAllPlayers(dataplayers);
+
+
+
+addplayer.addEventListener('click',function(){
+  PlayerModal.classList.remove('hidden');
+})
+closeModal.addEventListener('click', function(){
+  PlayerModal.classList.add('hidden');
+})
 
 playerPhoto.addEventListener("change", function (event) {
   const file = event.target.files[0];
@@ -286,9 +298,6 @@ addplayerbtn.addEventListener('click', function (e) {
 });
 
 
-const card = document.querySelectorAll("#card");
-const allplayers = document.getElementById("allplayers");
-const formation = document.getElementById("formation");
 
 const positions = {
   LW: 'LW',
@@ -300,49 +309,11 @@ const positions = {
   RB: 'RB',
   GK: 'GK'
 }
-let cardPos;
-let currentTarget;
-card.forEach(cards => {
-  cards.addEventListener('click', function (e) {
-    currentTarget = e.currentTarget;
-    cardPos = e.currentTarget.dataset.position;
-    console.log(cardPos);
-    console.log(currentTarget);
-    Object.values(positions).forEach((value) => {
-      if (cards.dataset.position === value) {
-        let playersArray = [];
-        data.players.forEach(element => {
-          if (element.position === value) {
-            playersArray.push(element);
-          }
-        });
-
-        displayAllPlayers(playersArray);
-
-        allplayers.classList.remove('hidden');
-        setTimeout(() => {
-          allplayers.classList.add('opacity-100', 'scale-100');
-          allplayers.classList.remove('opacity-0', 'scale-95');
-        }, 10);
-
-        formation.classList.add('hidden');
-      }
-    });
-  });
-});
 
 const closebtn = document.getElementById('closebtn');
-
 closebtn.addEventListener('click', function(){
   allplayers.classList.add('hidden');
   formation.classList.remove('hidden');
-
-  allplayers.classList.add('hidden');
-        setTimeout(() => {
-          allplayers.classList.add('opacity-0', 'scale-95');
-          allplayers.classList.remove('opacity-100', 'scale-100');
-        }, 10);
-        formation.classList.remove('hidden');
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -377,51 +348,79 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function addCardClickListeners() {
-  const cardsplayer = document.querySelectorAll("#cardsplayer");
-  cardsplayer.forEach(card => {
-    card.addEventListener('click', function(e) {
-      let Idset = e.target.parentElement.parentElement.dataset.id;
-      console.log('iddd : ', parseInt(Idset));
-      let newobj;
-      data.players.forEach(p=>{
-        if(p.id === parseInt(Idset)){
-          console.log("player id",p.id);
-          newobj = p;
-        }
-      })
-      console.log(newobj);
 
-       currentTarget.innerHTML = ``;
-       currentTarget.innerHTML = `
-        <div class="relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-            <!-- Player Rating -->
-            <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
-              ${newobj.rating}
-            </div>
-            <!-- Player Position -->
-            <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
-              ${newobj.position}
-            </div>
+let cardPos;
+let currentTarget;
 
-            <!-- Player Image and Info -->
-            <div class="flex flex-col items-center">
-              <img id="photo" src="${newobj.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
 
-              <!-- Player Name -->
-              <p id="name" class="text-[8px] font-bold text-center mt-1">
-                ${newobj.name}
-              </p>
-            </div>
-            <div class="flex items-center justify-center mt-1 space-x-1">
-              <img id="flag" src="${newobj.flag}" alt="Flag" class="w-2 h-2">
-              <img id="logo" src="${newobj.logo}" alt="Logo" class="w-2 h-2">
-            </div>
-          </div>
-       `
-       allplayers.classList.add('hidden');
-       formation.classList.remove('hidden');
-    });
+card.forEach(cards => {
+  cards.addEventListener('click', function (e) {
+    allplayers.classList.remove('hidden');
+    currentTarget= e.currentTarget;
+    cardPos = e.currentTarget.dataset.position;
+    const qrr = filtrePosition(cardPos);
+    formation.classList.add('hidden');
+    displayAllPlayers(qrr);
+    ClickCard();
   });
-  
+});
+
+function filtrePosition(pos){
+  let a = [];
+
+    dataplayers.forEach(element => {
+      let existing = document.querySelector(`#player${element.id}`);
+      console.log(existing);
+      
+      if(existing){
+        return;
+      }
+      if(element.position === pos){
+        a.push(element);
+      }
+    });
+    return a;
 }
+
+function ClickCard(){
+  const cardsplayer = document.querySelectorAll("#cardsplayer");
+  cardsplayer.forEach(element =>{
+    element.addEventListener("click",function(e){
+      let playerdiv =  e.currentTarget.dataset.id;
+      console.log(playerdiv);
+      
+      let foundPlr = dataplayers.find(plr => plr.id == playerdiv);      
+      
+      currentTarget.innerHTML = `
+      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+        <!-- Player Rating -->
+        <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
+          ${foundPlr.rating}
+        </div>
+        <!-- Player Position -->
+        <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
+          ${foundPlr.position}
+        </div>
+
+        <!-- Player Image and Info -->
+        <div class="flex flex-col items-center">
+          <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
+
+          <!-- Player Name -->
+          <p id="name" class="text-[8px] font-bold text-center mt-1">
+            ${foundPlr.name}
+          </p>
+        </div>
+        <div class="flex items-center justify-center mt-1 space-x-1">
+          <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
+          <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
+        </div>
+         </div> `;
+
+         allplayers.classList.add('hidden');
+         formation.classList.remove('hidden');
+        
+    });
+  })
+}
+
