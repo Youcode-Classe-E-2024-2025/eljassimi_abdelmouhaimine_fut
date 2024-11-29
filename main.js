@@ -172,11 +172,88 @@ function displayAllPlayers(dataplayers){
    } else {
      players.inelnerHTML += `<h1 class="text-white text-3xl font-bold">No Player Found!</h1>`;
    }
-
+   const EditBtn = document.querySelectorAll("#EditBtn");
+   EditPlayer(EditBtn);
 }
 
 
 // Edit Player
+
+function EditPlayer(EditBtn) {
+  EditBtn.forEach(element=>{
+    element.addEventListener("click",function(e) {
+      e.preventDefault();
+      e.stopPropagation()
+      let idBtn = parseInt(e.currentTarget.dataset.id);
+      PlayerModal.classList.remove('hidden');
+
+      addplayerbtn.classList.add("hidden");
+      editplayerbtn.classList.remove("hidden");
+
+      let plyr = dataplayers.find(plr => plr.id == idBtn);  
+      
+      playerName.value = plyr.name;
+      playerPosition.value = plyr.position;
+      playerNationality.value = plyr.nationality;
+      playerClub.value = plyr.club;
+      playerRating.value = plyr.rating;
+
+      if(playerPosition.value != "GK"){
+        playerPace.value = plyr.pace;
+        playerShooting.value = plyr.shooting;
+        playerPassing.value = plyr.passing;
+        playerDribbling.value = plyr.dribbling;
+        playerDefending.value = plyr.defending;
+        playerPhysical.value = plyr.physical;
+
+
+      }else if(playerPosition.value == "GK"){
+        playerPace.value = plyr.diving;
+        playerShooting.value = plyr.handling;
+        playerPassing.value = plyr.kicking;
+        playerDribbling.value = plyr.reflexes;
+        playerDefending.value = plyr.speed;
+        playerPhysical.value = plyr.positioning;
+      }
+
+
+      editplayerbtn.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+         plyr.name = playerName.value;
+         plyr.position = playerPosition.value;
+         plyr.photo = playerPhoto.value;
+         plyr.flag = playerFlag.value;
+         plyr.logo = playerLogo.value;
+         plyr.nationality = playerNationality.value;
+         plyr.club = playerClub.value;
+         plyr.rating = parseInt(playerRating.value);
+
+         if(playerPosition.value != "GK"){
+          plyr.pace = parseInt(playerPace.value);
+          plyr.shooting = parseInt(playerShooting.value);
+          plyr.passing = parseInt(playerPassing.value) ;
+          plyr.dribbling = parseInt(playerDribbling.value);
+          plyr.defending = parseInt(playerDefending.value) ;
+          plyr.physical = parseInt(playerPhysical.value);
+
+
+        }else if(playerPosition.value == "GK"){
+          plyr.diving = parseInt(playerPace.value);
+          plyr.handling = parseInt(playerShooting.value);
+          plyr.kicking = parseInt(playerPassing.value);
+          plyr.reflexes = parseInt(playerDribbling.value);
+          plyr.speed  = parseInt(playerDefending.value);
+          plyr.positioning = parseInt(playerPhysical.value);
+        }
+        localStorage.setItem("players", JSON.stringify(dataplayers));
+        PlayerModal.classList.add("hidden");
+        displayAllPlayers(dataplayers)
+      })
+    })
+  })
+}
+
 
 
 //DeletePlayer
