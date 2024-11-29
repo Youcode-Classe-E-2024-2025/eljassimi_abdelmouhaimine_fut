@@ -44,7 +44,7 @@ async function fetchPlayers() {
             }
         } catch (error) {
             console.error("Error fetching data:", error);
-            
+
         }
     }
 }
@@ -62,7 +62,7 @@ let players = document.getElementById("players");
 function displayAllPlayers(dataplayers){
   players.innerHTML = ``;
   console.log("dataplayers.players : ", dataplayers);
-   if(dataplayers){
+   if(dataplayers != 0){
      dataplayers.forEach(element => {
          if(element.position != 'GK'){
              players.innerHTML += `
@@ -168,7 +168,7 @@ function displayAllPlayers(dataplayers){
            `
            }
      });
-   } else {
+   }else{
      players.inelnerHTML += `<h1 class="text-white text-3xl font-bold">No Player Found!</h1>`;
    }
    const EditBtn = document.querySelectorAll("#EditBtn");
@@ -198,6 +198,7 @@ function EditPlayer(EditBtn) {
           playerClub.value = plyr.club;
           playerRating.value = plyr.rating;
 
+
           if(playerPosition.value != "GK"){
             playerPace.value = plyr.pace;
             playerShooting.value = plyr.shooting;
@@ -222,6 +223,7 @@ function EditPlayer(EditBtn) {
             console.log(element);
             e.preventDefault();
             e.stopPropagation();
+            
              plyr.name = playerName.value;
              plyr.position = playerPosition.value;
              plyr.photo = playerPhoto.value;
@@ -385,12 +387,12 @@ addplayerbtn.addEventListener('click', function (e) {
     let newgoalkeeper = {
       id : data.players.length + 1,
       name: playerName.value,
-      photo: playerPhotoBase64,
+      photo: playerPhoto.value,
       position: playerPosition.value,
       nationality: playerNationality.value,
-      flag: playerFlagBase64,
+      flag: playerFlag.value,
       club: playerClub.value,
-      logo: playerLogoBase64,
+      logo: playerLogo.value,
       rating: playerRating.value,
       diving: playerPace.value,
       handling: playerShooting.value,
@@ -597,3 +599,12 @@ function LoadFormation() {
 }
 
 LoadFormation();
+
+
+// Hadear Responsive 
+const burgerIcon = document.getElementById("burger-icon");
+      const mobileMenu = document.getElementById("mobile-menu");
+      
+      burgerIcon.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+});

@@ -11,27 +11,43 @@
 </head>
 <body class="relative h-screen bg-[#3a3a3a]">
 
-  <header class=" text-white">
-    <nav class="py-4">
-        <div class="container mx-auto flex justify-between items-center">
-          <a href="#" class="w-16 "><img src="src/assets/img/logo.png" alt=""></a>
-          <div class="flex space-x-8">
-            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Home</a>
-            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Formations</a>
-            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Players</a>
-            <a href="#" class="text-white hover:text-[#00ff03] text-lg">Contact</a>
-          </div>
+  <header class="">
+    <nav class="py-4 relative">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="#" class="w-16">
+          <img src="src/assets/img/logo.png" alt="Logo" class="h-8">
+        </a>
+
+        <ul class="hidden md:flex space-x-8">
+          <li><a href="#" class="text-white hover:text-[#01FF03]">Formation</a></li>
+          <li><a href="#" class="text-white hover:text-[#01FF03]">Players</a></li>
+          <li><a href="#" class="text-white hover:text-[#01FF03]">Contact</a></li>
+        </ul>
+  
+        <div class="md:hidden flex items-center" id="burger-menu">
+          <button class="text-white" id="burger-icon">
+            <i class="ri-menu-line text-2xl font-bold text-white"></i>
+          </button>
         </div>
-      </nav>
+      </div>
+    </nav>
+  
+    <div class="md:hidden absolute top-40 left-0 w-full bg-black text-white p-4 hidden z-50" id="mobile-menu">
+      <ul class="space-y-4">
+        <li><a href="#" class="block">Formation</a></li>
+        <li><a href="#" class="block">Players</a></li>
+        <li><a href="#" class="block">Contact</a></li>
+      </ul>
+    </div>
   </header>
-  <div id="formation" class="relative h-full bg-cover bg-center " style="background-image: url('src/assets/img/bg.png');">
+  
+  <div id="formation" class="relative h-full bg-cover bg-center" style="background-image: url('src/assets/img/bg.png');">
     <div class="relative h-[800px] flex flex-col justify-center items-center">
       <img class="w-full max-w-4xl" src="https://www.futbin.com/design2/img/static/field-bg.svg" alt="terrain">
   
       
-      <div class="absolute w-full max-w-4xl grid grid-rows-3 grid-cols-5 gap-y-16 pb-52">
+      <div class="absolute w-full max-w-4xl grid grid-rows-3 grid-cols-5 gap-y-12 md:gap-y-16 pb-52">
 
-        
         <div id="card" data-id="LW" data-position="LW" class="row-start-1 col-start-2 flex justify-start ">
           <img src="src/assets/img/card.png"  alt="Forward"  class="h-24 w-16 "/>
         </div>        
@@ -82,8 +98,8 @@
     </div>
 
     
-    <div class="absolute top-1/4 right-10 bg-black bg-opacity-75 p-6 rounded-lg text-white w-96 h-72 ">
-      <div class="mb-4 justify-center">
+   <div class="absolute top-1/4 right-10 bg-black bg-opacity-75 p-6 rounded-lg text-white w-96 h-72 hidden ">
+    <div class="mb-4 justify-center">
         <h2 class="text-lg font-bold">FORMATION</h2>
         <select class="w-full bg-gray-700 border border-gray-600 text-white rounded p-2">
           <option>4-3-3</option>
@@ -101,18 +117,17 @@
 
   <div id="allplayers" class="hidden" style="background-image: url('src/assets/img/bg.png');">
     <div class="absolute  h-full rounded-lg  p-8 w-[100%] ">
-      <div class="text-white mb-4 w-[20%]">
+      <!-- <div class="text-white mb-4 w-[20%]">
         <h2 class="text-2xl font-bold">Search</h2>
-      </div>
+      </div> -->
   
       <div class="flex justify-between" >
         <div class="flex items-center space-x-2 mb-8 w-[50%]">
-          <div class="relative w-[50%]">
+          <!-- <div class="relative w-[50%]">
             <input type="text" placeholder="search for player" class="flex-grow px-4 py-2 bg-black w-[100%] text-white rounded-md focus:outline-none"/>
             <i class="ri-search-line text-white text-2xl font-bold absolute z-10 right-3"></i>
-        
-          </div>
-          <select class="px-4 py-2 bg-black text-white rounded-md">
+          </div> -->
+          <!-- <select class="px-4 py-2 bg-black text-white rounded-md">
             <option>Position</option>
             <option>ST</option>
             <option>RW</option>
@@ -123,9 +138,9 @@
           </select>
           <select class="px-4 py-2 bg-black text-white rounded-md">
             <option>Nation</option>
-          </select>
+          </select> -->
         </div>
-        <div >
+        <div class="w-60">
           <button id="addplayer" class="text-black font-bold bg-[#00ff03] hover:shadow-xl hover:shadow-[#00ff0421] w-36 rounded-sm h-10">ADD PLAYER</button>
           <i id="closebtn" class="ri-close-line bg-[#00ff03] w-20 h-20 font-bold text-2xl"></i>
         </div>
@@ -250,5 +265,6 @@
     
     
   </div>
+
  <script src="main.js"></script>
 </body>
