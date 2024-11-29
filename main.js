@@ -19,11 +19,9 @@ let playerPhysical = document.getElementById('playerPhysical');
 
 
 let addplayerbtn = document.getElementById('addplayerbtn');
+let editplayerbtn = document.getElementById('editplayerbtn');
 
 
-let playerPhotoBase64 = "";
-let playerFlagBase64 = "";
-let playerLogoBase64 = "";
 
 
 const card = document.querySelectorAll("#card");
@@ -56,139 +54,156 @@ async function fetchPlayers() {
 fetchPlayers();
 
 let dataplayers = data.players;
-console.log(dataplayers);
+// console.log(dataplayers);
 
 
 
 let players = document.getElementById("players");
-
+//Display All Players 
 function displayAllPlayers(dataplayers){
+  
   players.innerHTML = ``;
-    dataplayers.forEach(element => {
-        if(element.position != 'GK'){
-            players.innerHTML += `
-              <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-                    <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
+   if(dataplayers){
+     dataplayers.forEach(element => {
+         if(element.position != 'GK'){
+             players.innerHTML += `
+                <div id="cardsplayer" data-display="1" data-id="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+                    
+                    <div class="absolute z-10 opacity-0 h-80 w-72 transition-all hover:opacity-100 right-5 top-4 pt-6">
+                      <div class="flex space-x-2 justify-end">
+                        <button id="EditBtn" data-id="${element.id}" class=" bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+                          <i class="ri-edit-line text-white text-xl"></i>
+                        </button>
+                        
+                        <button id="deleteBtn" data-id="${element.id}" class=" bg-red-500 text-white p-2 rounded hover:bg-red-700">
+                          <i class="ri-delete-bin-line text-white text-xl"></i> <!-- Delete Icon -->
+                        </button>
+                      </div>
+                    </div>
+
+                    <div id="rating" class="absolute top-16 left-10 text-4xl font-bold">
                       ${element.rating}
                     </div>
-                    <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
-                    ${element.position}
+                    <div id="position" class="absolute top-24 left-10 text-sm font-bold pt-1 text-black px-2 rounded">
+                      ${element.position}
                     </div>
                     <div class="flex flex-col items-center mt-12">
-                      <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
+                      <img id="photo" src="${element.photo}" alt="${element.name}" class="w-44">
                       <h1 id="name" class="text-xl font-bold">${element.name}</h1>
                       <div class="flex items-center">
-                        <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
-                        <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
+                        <img id="flag" src="${element.flag}" alt="Flag" class="w-5 h-5 mr-2">
+                        <img id="logo" src="${element.logo}" alt="Logo" class="w-5 h-5 mr-2">
                       </div>
                     </div>
                     <div class="flex flex-col items-center space-y-1">
                       <div class="flex justify-around w-full px-4">
-                        <span  class="text-sm text-black">PAC</span>
-                        <span  class="text-sm text-black">SHO</span>
-                        <span  class="text-sm text-black">KIC</span>
-                        <span  class="text-sm text-black">REF</span>
-                        <span  class="text-sm text-black">SPE</span>
-                        <span  class="text-sm text-black">POS</span>
+                        <span class="text-sm text-black">PAC</span>
+                        <span class="text-sm text-black">SHO</span>
+                        <span class="text-sm text-black">KIC</span>
+                        <span class="text-sm text-black">REF</span>
+                        <span class="text-sm text-black">SPE</span>
+                        <span class="text-sm text-black">POS</span>
                       </div>
                       <div class="flex justify-around w-full px-4 pb-6">
-                      <span id="pace" class="text-sm font-bold text-black">${element.pace}</span>
-                      <span id="shooting" class="text-sm font-bold text-black">${element.shooting}</span>
-                      <span id="passing" class="text-sm font-bold text-black">${element.passing}</span>
-                      <span id="dribbling" class="text-sm font-bold text-black">${element.dribbling}</span>
-                      <span id="defending" class="text-sm font-bold text-black">${element.defending}</span>
-                      <span id="physical" class="text-sm font-bold text-black">${element.physical}</span>
-                    </div>
-                   </div>
-            `
-          }else{
-            players.innerHTML += `
-            <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-                  <div id="rating" class="absolute top-16 left-10   text-4xl font-bold">
-                    ${element.rating}
-                  </div>
-                  <div id="position" class=" absolute top-24 left-10 text-sm font-bold pt-1  text-black px-2 rounded">
-                  ${element.position}
-                  </div>
-                  <div class="flex flex-col items-center mt-12">
-                    <img id="photo" src="${element.photo}" alt="Lionel Messi" class="w-44">
-                    <h1 id="name" class="text-xl font-bold">${element.name}</h1>
-                    <div class="flex items-center">
-                      <img id="flag" src="${element.flag}" alt="Argentina" class="w-5 h-5 mr-2">
-                      <img id="logo" src="${element.logo}" alt="Inter Miami" class="w-5 h-5 mr-2">
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-center space-y-1">
-                    <div class="flex justify-around w-full px-4">
-                      <span  class="text-sm text-black">DIV</span>
-                      <span  class="text-sm text-black">HAN</span>
-                      <span  class="text-sm text-black">PAS</span>
-                      <span  class="text-sm text-black">DRI</span>
-                      <span  class="text-sm text-black">DEF</span>
-                      <span  class="text-sm text-black">PHY</span>
-                    </div>
-                    <div class="flex justify-around w-full px-4 pb-6">
-                        <span id="pace" class="text-sm font-bold text-black">${element.diving}</span>
-                        <span id="shooting" class="text-sm font-bold text-black">${element.handling}</span>
-                        <span id="passing" class="text-sm font-bold text-black">${element.kicking}</span>
-                        <span id="dribbling" class="text-sm font-bold text-black">${element.reflexes}</span>
-                        <span id="defending" class="text-sm font-bold text-black">${element.speed}</span>
-                        <span id="physical" class="text-sm font-bold text-black">${element.positioning}</span>
+                        <span id="pace" class="text-sm font-bold text-black">${element.pace}</span>
+                        <span id="shooting" class="text-sm font-bold text-black">${element.shooting}</span>
+                        <span id="passing" class="text-sm font-bold text-black">${element.passing}</span>
+                        <span id="dribbling" class="text-sm font-bold text-black">${element.dribbling}</span>
+                        <span id="defending" class="text-sm font-bold text-black">${element.defending}</span>
+                        <span id="physical" class="text-sm font-bold text-black">${element.physical}</span>
                       </div>
+                    </div>
+                  </div>
+
+
+             `;
+           }else{
+             players.innerHTML += `
+             <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+               
+                <div class="absolute z-10 opacity-0 h-80 w-72 transition-all hover:opacity-100 right-5 top-4 pt-6">
+                      <div class="flex space-x-2 justify-end">
+                        <button  id="EditBtn" data-id="${element.id}" class=" bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+                          <i class="ri-edit-line text-white text-xl"></i>
+                        </button>
+                        
+                        <button id="deleteBtn" class="bg-red-500 text-white p-2 rounded hover:bg-red-700">
+                          <i class="ri-delete-bin-line text-white text-xl"></i>
+                        </button>
+                      </div>
+                    </div>
+
+               <div id="rating" class="absolute top-16 left-10 text-4xl font-bold">
+                 ${element.rating}
+               </div>
+               <div id="position" class="absolute top-24 left-10 text-sm font-bold pt-1 text-black px-2 rounded">
+                 ${element.position}
+               </div>
+               <div class="flex flex-col items-center mt-12">
+                 <img id="photo" src="${element.photo}" alt="${element.name}" class="w-44">
+                 <h1 id="name" class="text-xl font-bold">${element.name}</h1>
+                 <div class="flex items-center">
+                   <img id="flag" src="${element.flag}" alt="Flag" class="w-5 h-5 mr-2">
+                   <img id="logo" src="${element.logo}" alt="Logo" class="w-5 h-5 mr-2">
                  </div>
-          `
+               </div>
+               <div class="flex flex-col items-center space-y-1">
+                 <div class="flex justify-around w-full px-4">
+                   <span class="text-sm text-black">DIV</span>
+                   <span class="text-sm text-black">HAN</span>
+                   <span class="text-sm text-black">PAS</span>
+                   <span class="text-sm text-black">DRI</span>
+                   <span class="text-sm text-black">DEF</span>
+                   <span class="text-sm text-black">PHY</span>
+                 </div>
+                 <div class="flex justify-around w-full px-4 pb-6">
+                   <span id="pace" class="text-sm font-bold text-black">${element.diving}</span>
+                   <span id="shooting" class="text-sm font-bold text-black">${element.handling}</span>
+                   <span id="passing" class="text-sm font-bold text-black">${element.kicking}</span>
+                   <span id="dribbling" class="text-sm font-bold text-black">${element.reflexes}</span>
+                   <span id="defending" class="text-sm font-bold text-black">${element.speed}</span>
+                   <span id="physical" class="text-sm font-bold text-black">${element.positioning}</span>
+                 </div>
+               </div>
+             </div>
+           `
+           }
+     });
+   } else {
+     players.inelnerHTML += `<h1 class="text-white text-3xl font-bold">No Player Found!</h1>`;
+   }
 
-  }
-
-  });
-  // addCardClickListeners();
 }
+
+
+// Edit Player
+
+
+//DeletePlayer
+
+
+
+
+      
 displayAllPlayers(dataplayers);
 
 
 
 addplayer.addEventListener('click',function(){
   PlayerModal.classList.remove('hidden');
+  editplayerbtn.classList.add("hidden");
+  addplayerbtn.classList.remove("hidden");
 })
+
+
 closeModal.addEventListener('click', function(){
   PlayerModal.classList.add('hidden');
 })
 
-playerPhoto.addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      playerPhotoBase64 = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-playerFlag.addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      playerFlagBase64 = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-playerLogo.addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      playerLogoBase64 = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-});
 
 
 addplayerbtn.addEventListener('click', function (e) {
+   
   e.preventDefault();
 
   const name = playerName.value;
@@ -218,7 +233,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerPhoto.files.length === 0) {
+  if (playerPhoto.length === 0) {
     rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
@@ -228,7 +243,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerFlag.files.length === 0 ) {
+  if (playerFlag.length === 0 ) {
     rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
@@ -238,7 +253,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerLogo.files.length === 0) {
+  if (playerLogo.length === 0) {
     rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
@@ -250,16 +265,17 @@ addplayerbtn.addEventListener('click', function (e) {
     }
   }
     // idd  =  data.players.length + 1;
+
   if (playerPosition.value !== 'GK') {
     let newplayer = {
       id : data.players.length + 1,
       name: playerName.value,
-      photo: playerPhotoBase64,
+      photo: playerPhoto.value,
       position: playerPosition.value,
       nationality: playerNationality.value,
-      flag: playerFlagBase64,
+      flag: playerFlag.value,
       club: playerClub.value,
-      logo: playerLogoBase64,
+      logo: playerLogo.value,
       rating: playerRating.value,
       pace: playerPace.value,
       shooting: playerShooting.value,
@@ -272,6 +288,7 @@ addplayerbtn.addEventListener('click', function (e) {
     data.players.push(newplayer);
   } else {
     let newgoalkeeper = {
+      id : data.players.length + 1,
       name: playerName.value,
       photo: playerPhotoBase64,
       position: playerPosition.value,
@@ -294,7 +311,9 @@ addplayerbtn.addEventListener('click', function (e) {
   localStorage.setItem('players', JSON.stringify(data));
   dataplayers = data.players;
   displayAllPlayers(dataplayers);
+
   PlayerModal.classList.add('hidden');
+
 });
 
 
@@ -382,45 +401,4 @@ function filtrePosition(pos){
     return a;
 }
 
-function ClickCard(){
-  const cardsplayer = document.querySelectorAll("#cardsplayer");
-  cardsplayer.forEach(element =>{
-    element.addEventListener("click",function(e){
-      let playerdiv =  e.currentTarget.dataset.id;
-      console.log(playerdiv);
-      
-      let foundPlr = dataplayers.find(plr => plr.id == playerdiv);      
-      
-      currentTarget.innerHTML = `
-      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-        <!-- Player Rating -->
-        <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
-          ${foundPlr.rating}
-        </div>
-        <!-- Player Position -->
-        <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
-          ${foundPlr.position}
-        </div>
-
-        <!-- Player Image and Info -->
-        <div class="flex flex-col items-center">
-          <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
-
-          <!-- Player Name -->
-          <p id="name" class="text-[8px] font-bold text-center mt-1">
-            ${foundPlr.name}
-          </p>
-        </div>
-        <div class="flex items-center justify-center mt-1 space-x-1">
-          <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
-          <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
-        </div>
-         </div> `;
-
-         allplayers.classList.add('hidden');
-         formation.classList.remove('hidden');
-        
-    });
-  })
-}
 
