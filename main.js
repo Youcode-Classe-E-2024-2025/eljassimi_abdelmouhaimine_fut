@@ -53,15 +53,15 @@ fetchPlayers();
 
 let dataplayers = data.players;
 
+
 // console.log(dataplayers);
 
 
 
 let players = document.getElementById("players");
-
 function displayAllPlayers(dataplayers){
-  
   players.innerHTML = ``;
+  console.log("dataplayers.players : ", dataplayers);
    if(dataplayers){
      dataplayers.forEach(element => {
          if(element.position != 'GK'){
@@ -171,7 +171,6 @@ function displayAllPlayers(dataplayers){
    } else {
      players.inelnerHTML += `<h1 class="text-white text-3xl font-bold">No Player Found!</h1>`;
    }
-
    const EditBtn = document.querySelectorAll("#EditBtn");
    const deleteBtn = document.querySelectorAll("#deleteBtn");
    EditPlayer(EditBtn);
@@ -191,7 +190,7 @@ function EditPlayer(EditBtn) {
           addplayerbtn.classList.add("hidden");
           editplayerbtn.classList.remove("hidden");
 
-          let plyr = dataplayers.find(plr => plr.id == idBtn);  
+          let plyr = dataplayers.players.find(plr => plr.id == idBtn);  
           
           playerName.value = plyr.name;
           playerPosition.value = plyr.position;
@@ -219,6 +218,8 @@ function EditPlayer(EditBtn) {
 
 
           editplayerbtn.addEventListener("click",function(e){
+
+            console.log(element);
             e.preventDefault();
             e.stopPropagation();
              plyr.name = playerName.value;
@@ -249,7 +250,7 @@ function EditPlayer(EditBtn) {
             }
             localStorage.setItem("players", JSON.stringify(dataplayers));
             PlayerModal.classList.add("hidden");
-            displayAllPlayers(dataplayers)
+            displayAllPlayers(dataplayers.players);
           })
         })
       })
