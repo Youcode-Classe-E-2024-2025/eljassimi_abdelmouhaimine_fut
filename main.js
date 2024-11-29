@@ -22,8 +22,6 @@ let addplayerbtn = document.getElementById('addplayerbtn');
 let editplayerbtn = document.getElementById('editplayerbtn');
 
 
-
-
 const card = document.querySelectorAll("#card");
 const allplayers = document.getElementById("allplayers");
 const formation = document.getElementById("formation");
@@ -54,12 +52,13 @@ async function fetchPlayers() {
 fetchPlayers();
 
 let dataplayers = data.players;
+
 // console.log(dataplayers);
 
 
 
 let players = document.getElementById("players");
-//Display All Players 
+
 function displayAllPlayers(dataplayers){
   
   players.innerHTML = ``;
@@ -172,95 +171,90 @@ function displayAllPlayers(dataplayers){
    } else {
      players.inelnerHTML += `<h1 class="text-white text-3xl font-bold">No Player Found!</h1>`;
    }
+
    const EditBtn = document.querySelectorAll("#EditBtn");
-   EditPlayer(EditBtn);
-
    const deleteBtn = document.querySelectorAll("#deleteBtn");
+   EditPlayer(EditBtn);
    Deleteplayer(deleteBtn);
-
 }
 
 
-// Edit Player
 
 function EditPlayer(EditBtn) {
-  EditBtn.forEach(element=>{
-    element.addEventListener("click",function(e) {
-      e.preventDefault();
-      e.stopPropagation()
-      let idBtn = parseInt(e.currentTarget.dataset.id);
-      PlayerModal.classList.remove('hidden');
+      EditBtn.forEach(element=>{
+        element.addEventListener("click",function(e) {
+          e.preventDefault();
+          e.stopPropagation()
+          let idBtn = parseInt(e.currentTarget.dataset.id);
+          PlayerModal.classList.remove('hidden');
 
-      addplayerbtn.classList.add("hidden");
-      editplayerbtn.classList.remove("hidden");
+          addplayerbtn.classList.add("hidden");
+          editplayerbtn.classList.remove("hidden");
 
-      let plyr = dataplayers.find(plr => plr.id == idBtn);  
-      
-      playerName.value = plyr.name;
-      playerPosition.value = plyr.position;
-      playerNationality.value = plyr.nationality;
-      playerClub.value = plyr.club;
-      playerRating.value = plyr.rating;
+          let plyr = dataplayers.find(plr => plr.id == idBtn);  
+          
+          playerName.value = plyr.name;
+          playerPosition.value = plyr.position;
+          playerNationality.value = plyr.nationality;
+          playerClub.value = plyr.club;
+          playerRating.value = plyr.rating;
 
-      if(playerPosition.value != "GK"){
-        playerPace.value = plyr.pace;
-        playerShooting.value = plyr.shooting;
-        playerPassing.value = plyr.passing;
-        playerDribbling.value = plyr.dribbling;
-        playerDefending.value = plyr.defending;
-        playerPhysical.value = plyr.physical;
-
-
-      }else if(playerPosition.value == "GK"){
-        playerPace.value = plyr.diving;
-        playerShooting.value = plyr.handling;
-        playerPassing.value = plyr.kicking;
-        playerDribbling.value = plyr.reflexes;
-        playerDefending.value = plyr.speed;
-        playerPhysical.value = plyr.positioning;
-      }
+          if(playerPosition.value != "GK"){
+            playerPace.value = plyr.pace;
+            playerShooting.value = plyr.shooting;
+            playerPassing.value = plyr.passing;
+            playerDribbling.value = plyr.dribbling;
+            playerDefending.value = plyr.defending;
+            playerPhysical.value = plyr.physical;
 
 
-      editplayerbtn.addEventListener("click",function(e){
-        e.preventDefault();
-        e.stopPropagation();
-         plyr.name = playerName.value;
-         plyr.position = playerPosition.value;
-         plyr.photo = playerPhoto.value;
-         plyr.flag = playerFlag.value;
-         plyr.logo = playerLogo.value;
-         plyr.nationality = playerNationality.value;
-         plyr.club = playerClub.value;
-         plyr.rating = parseInt(playerRating.value);
-
-         if(playerPosition.value != "GK"){
-          plyr.pace = parseInt(playerPace.value);
-          plyr.shooting = parseInt(playerShooting.value);
-          plyr.passing = parseInt(playerPassing.value) ;
-          plyr.dribbling = parseInt(playerDribbling.value);
-          plyr.defending = parseInt(playerDefending.value) ;
-          plyr.physical = parseInt(playerPhysical.value);
+          }else if(playerPosition.value == "GK"){
+            playerPace.value = plyr.diving;
+            playerShooting.value = plyr.handling;
+            playerPassing.value = plyr.kicking;
+            playerDribbling.value = plyr.reflexes;
+            playerDefending.value = plyr.speed;
+            playerPhysical.value = plyr.positioning;
+          }
 
 
-        }else if(playerPosition.value == "GK"){
-          plyr.diving = parseInt(playerPace.value);
-          plyr.handling = parseInt(playerShooting.value);
-          plyr.kicking = parseInt(playerPassing.value);
-          plyr.reflexes = parseInt(playerDribbling.value);
-          plyr.speed  = parseInt(playerDefending.value);
-          plyr.positioning = parseInt(playerPhysical.value);
-        }
-        localStorage.setItem("players", JSON.stringify(dataplayers));
-        PlayerModal.classList.add("hidden");
-        displayAllPlayers(dataplayers)
+          editplayerbtn.addEventListener("click",function(e){
+            e.preventDefault();
+            e.stopPropagation();
+             plyr.name = playerName.value;
+             plyr.position = playerPosition.value;
+             plyr.photo = playerPhoto.value;
+             plyr.flag = playerFlag.value;
+             plyr.logo = playerLogo.value;
+             plyr.nationality = playerNationality.value;
+             plyr.club = playerClub.value;
+             plyr.rating = parseInt(playerRating.value);
+
+             if(playerPosition.value != "GK"){
+              plyr.pace = parseInt(playerPace.value);
+              plyr.shooting = parseInt(playerShooting.value);
+              plyr.passing = parseInt(playerPassing.value) ;
+              plyr.dribbling = parseInt(playerDribbling.value);
+              plyr.defending = parseInt(playerDefending.value) ;
+              plyr.physical = parseInt(playerPhysical.value);
+  
+  
+            }else if(playerPosition.value == "GK"){
+              plyr.diving = parseInt(playerPace.value);
+              plyr.handling = parseInt(playerShooting.value);
+              plyr.kicking = parseInt(playerPassing.value);
+              plyr.reflexes = parseInt(playerDribbling.value);
+              plyr.speed  = parseInt(playerDefending.value);
+              plyr.positioning = parseInt(playerPhysical.value);
+            }
+            localStorage.setItem("players", JSON.stringify(dataplayers));
+            PlayerModal.classList.add("hidden");
+            displayAllPlayers(dataplayers)
+          })
+        })
       })
-    })
-  })
 }
 
-
-
-//DeletePlayer
 
 function Deleteplayer(deleteBtn) {
   deleteBtn.forEach(element => {
@@ -268,25 +262,22 @@ function Deleteplayer(deleteBtn) {
       e.preventDefault();
       e.stopPropagation();
       let idBtn = parseInt(e.currentTarget.dataset.id);
-
-      console.log(idBtn);
-      let index = idBtn - 1;
-
-      dataplayers.splice(index, 1);
-
+      let index = dataplayers.players.findIndex(plr => plr.id == idBtn);  
+      dataplayers.players.splice(index, 1);
       let formation = JSON.parse(localStorage.getItem("Formation")) || [];
       formation = formation.filter(f => f.playerFormationId !== idBtn);
       localStorage.setItem("Formation", JSON.stringify(formation));
-
-
       localStorage.setItem("players", JSON.stringify(dataplayers));
 
-
-      displayAllPlayers(dataplayers);
+      console.log(dataplayers);
+      displayAllPlayers(dataplayers.players);
       LoadFormation();
     });
   })
 }
+
+
+
       
 displayAllPlayers(dataplayers);
 
@@ -489,8 +480,7 @@ card.forEach(cards => {
 
 function filtrePosition(pos){
   let a = [];
-
-    dataplayers.forEach(element => {
+    dataplayers.players.forEach(element => {
       let existing = document.querySelector(`#player${element.id}`);
       console.log(existing);
       
@@ -505,28 +495,31 @@ function filtrePosition(pos){
 }
 
 let Formation = JSON.parse(localStorage.getItem("Formation")) || [];
+
 function ClickCard(){
   const cardsplayer = document.querySelectorAll("#cardsplayer");
   cardsplayer.forEach(element =>{
     element.addEventListener("click",function(e){
       let playerdiv =  e.currentTarget.dataset.id;
-      
-      let foundPlr = dataplayers.find(plr => plr.id == playerdiv);     
+      console.log("dataplayerssss : ", dataplayers);
 
+      let foundPlr = dataplayers.players.find(plr => plr.id == playerdiv);      
       currentTarget.innerHTML = `
       <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-        
+        <!-- Player Rating -->
         <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
           ${foundPlr.rating}
         </div>
+        <!-- Player Position -->
         <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
           ${foundPlr.position}
         </div>
 
-        
+        <!-- Player Image and Info -->
         <div class="flex flex-col items-center">
           <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
 
+          <!-- Player Name -->
           <p id="name" class="text-[8px] font-bold text-center mt-1">
             ${foundPlr.name}
           </p>
@@ -536,6 +529,7 @@ function ClickCard(){
           <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
         </div>
          </div> `;
+
          let carddiv =  currentTarget.dataset.id;
            const PlayerObject = {
               playerFormationId: playerdiv,
@@ -553,5 +547,52 @@ function ClickCard(){
     });
   })
 }
+dataplayers = JSON.parse(localStorage.getItem("players")) || [];
 
+function LoadFormation() {
+  let form = JSON.parse(localStorage.getItem("Formation"));
 
+  if (form) {
+    form.forEach(f => {
+      const card = document.querySelector(`[data-id="${f.cardFormationId}"]`);
+      let foundPlr = dataplayers.players.find(plr => plr.id == f.playerFormationId);
+
+      if (!foundPlr) {
+        form = form.filter(fItem => fItem.playerFormationId !== f.playerFormationId);
+        localStorage.setItem("Formation", JSON.stringify(form));
+        return;
+      }
+
+      if (card && foundPlr) {
+        card.innerHTML = `
+          <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+            <!-- Player Rating -->
+            <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
+              ${foundPlr.rating}
+            </div>
+            <!-- Player Position -->
+            <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
+              ${foundPlr.position}
+            </div>
+
+            <!-- Player Image and Info -->
+            <div class="flex flex-col items-center">
+              <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
+
+              <!-- Player Name -->
+              <p id="name" class="text-[8px] font-bold text-center mt-1">
+                ${foundPlr.name}
+              </p>
+            </div>
+            <div class="flex items-center justify-center mt-1 space-x-1">
+              <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
+              <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
+}
+
+LoadFormation();
