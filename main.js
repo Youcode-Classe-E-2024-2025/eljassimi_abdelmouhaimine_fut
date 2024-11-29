@@ -174,6 +174,10 @@ function displayAllPlayers(dataplayers){
    }
    const EditBtn = document.querySelectorAll("#EditBtn");
    EditPlayer(EditBtn);
+
+   const deleteBtn = document.querySelectorAll("#deleteBtn");
+   Deleteplayer(deleteBtn);
+
 }
 
 
@@ -258,9 +262,31 @@ function EditPlayer(EditBtn) {
 
 //DeletePlayer
 
+function Deleteplayer(deleteBtn) {
+  deleteBtn.forEach(element => {
+    element.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let idBtn = parseInt(e.currentTarget.dataset.id);
+
+      console.log(idBtn);
+      let index = idBtn - 1;
+
+      dataplayers.splice(index, 1);
+
+      let formation = JSON.parse(localStorage.getItem("Formation")) || [];
+      formation = formation.filter(f => f.playerFormationId !== idBtn);
+      localStorage.setItem("Formation", JSON.stringify(formation));
 
 
+      localStorage.setItem("players", JSON.stringify(dataplayers));
 
+
+      displayAllPlayers(dataplayers);
+      LoadFormation();
+    });
+  })
+}
       
 displayAllPlayers(dataplayers);
 
