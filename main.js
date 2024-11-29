@@ -504,4 +504,54 @@ function filtrePosition(pos){
     return a;
 }
 
+let Formation = JSON.parse(localStorage.getItem("Formation")) || [];
+function ClickCard(){
+  const cardsplayer = document.querySelectorAll("#cardsplayer");
+  cardsplayer.forEach(element =>{
+    element.addEventListener("click",function(e){
+      let playerdiv =  e.currentTarget.dataset.id;
+      
+      let foundPlr = dataplayers.find(plr => plr.id == playerdiv);     
+
+      currentTarget.innerHTML = `
+      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+        
+        <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
+          ${foundPlr.rating}
+        </div>
+        <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
+          ${foundPlr.position}
+        </div>
+
+        
+        <div class="flex flex-col items-center">
+          <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
+
+          <p id="name" class="text-[8px] font-bold text-center mt-1">
+            ${foundPlr.name}
+          </p>
+        </div>
+        <div class="flex items-center justify-center mt-1 space-x-1">
+          <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
+          <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
+        </div>
+         </div> `;
+         let carddiv =  currentTarget.dataset.id;
+           const PlayerObject = {
+              playerFormationId: playerdiv,
+              cardFormationId: carddiv
+            };
+
+             Formation.push(PlayerObject);
+             localStorage.setItem("Formation", JSON.stringify(Formation));
+
+            //  console.log('The Formation : ', Formation);
+            
+         allplayers.classList.add('hidden');
+         formation.classList.remove('hidden');
+         LoadFormation();
+    });
+  })
+}
+
 
