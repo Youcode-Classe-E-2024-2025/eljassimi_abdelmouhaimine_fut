@@ -180,144 +180,156 @@ function displayAllPlayers(dataplayers){
 }
 
 
+function validatePlayerData() {
+  const name = playerName.value;
+  const powers = [
+    playerRating.value,
+    playerPace.value,
+    playerShooting.value,
+    playerPassing.value,
+    playerDribbling.value,
+    playerDefending.value,
+    playerPhysical.value,
+  ];
+
+  let rejectname = document.getElementById('rejectname');
+  let rejectclub = document.getElementById('rejectclub');
+  let rejectphoto = document.getElementById('rejectphoto');
+  let rejectlogo = document.getElementById('rejectlogo');
+  let rejectflag = document.getElementById('rejectflag');
+  let rejectpower = document.getElementById('rejectpower');
+  let rejectnationality = document.getElementById('rejectnationality');
+
+
+  rejectname.innerHTML = ``; rejectclub.innerHTML = ``;  rejectphoto.innerHTML = ``;  rejectlogo.innerHTML = ``;  rejectflag.innerHTML = ``;
+  rejectpower.innerHTML = ``;  rejectnationality.innerHTML = ``;
+
+
+  if (!name || /[0-9]/.test(name)) {
+    rejectname.innerHTML += `<p class="text-red-600">Name incorrect</p>`;
+    return false;
+  }
+
+  
+  if (!playerPhoto.value) {
+    rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`;
+    return false;
+  }
+
+
+  if (!playerNationality.value || /[0-9]/.test(playerNationality.value)) {
+    rejectnationality.innerHTML += `<p class="text-red-600">Nationality incorrect</p>`;
+    return false;
+  }
+
+
+  if (!playerFlag.value) {
+    rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`;
+    return false;
+  }
+
+
+  if (!playerClub.value || /[0-9]/.test(playerClub.value)) {
+    rejectclub.innerHTML += `<p class="text-red-600">Club incorrect</p>`;
+    return false;
+  }
+
+
+  if (!playerLogo.value) {
+    rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`;
+    return false;
+  }
+
+
+  for (const power of powers) {
+    if (power === '' || isNaN(power) || power < 0 || power > 100) {
+      rejectpower.innerHTML += `<p class="text-red-600">Power values should be between 0-100</p>`;
+      return false;
+    }
+  }
+
+  return true;
+}
+
+
+
 
 function EditPlayer(EditBtn) {
-      EditBtn.forEach(element=>{
-        element.addEventListener("click",function(e) {
-          e.preventDefault();
-          e.stopPropagation()
-          let idBtn = parseInt(e.currentTarget.dataset.id);
-          PlayerModal.classList.remove('hidden');
-          playerModalTitile.textContent = "Edit Player";
+  EditBtn.forEach(element => {
+    element.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let idBtn = parseInt(e.currentTarget.dataset.id);
+      PlayerModal.classList.remove('hidden');
+      playerModalTitile.textContent = "Edit Player";
 
-          addplayerbtn.classList.add("hidden");
-          editplayerbtn.classList.remove("hidden");
+      addplayerbtn.classList.add("hidden");
+      editplayerbtn.classList.remove("hidden");
 
-          let plyr = dataplayers.players.find(plr => plr.id == idBtn);  
-          
-          playerName.value = plyr.name;
-          playerPosition.value = plyr.position;
-          playerNationality.value = plyr.nationality;
-          playerClub.value = plyr.club;
-          playerRating.value = plyr.rating;
+      let plyr = dataplayers.players.find(plr => plr.id == idBtn);
 
+      playerName.value = plyr.name;
+      playerPosition.value = plyr.position;
+      playerNationality.value = plyr.nationality;
+      playerClub.value = plyr.club;
+      playerRating.value = plyr.rating;
 
-          if(playerPosition.value != "GK"){
-            playerPace.value = plyr.pace;
-            playerShooting.value = plyr.shooting;
-            playerPassing.value = plyr.passing;
-            playerDribbling.value = plyr.dribbling;
-            playerDefending.value = plyr.defending;
-            playerPhysical.value = plyr.physical;
+      if (playerPosition.value != "GK") {
+        playerPace.value = plyr.pace;
+        playerShooting.value = plyr.shooting;
+        playerPassing.value = plyr.passing;
+        playerDribbling.value = plyr.dribbling;
+        playerDefending.value = plyr.defending;
+        playerPhysical.value = plyr.physical;
+      } else if (playerPosition.value == "GK") {
+        playerPace.value = plyr.diving;
+        playerShooting.value = plyr.handling;
+        playerPassing.value = plyr.kicking;
+        playerDribbling.value = plyr.reflexes;
+        playerDefending.value = plyr.speed;
+        playerPhysical.value = plyr.positioning;
+      }
 
+      editplayerbtn.addEventListener("click", function (e) {
+        console.log(element);
+        e.preventDefault();
+        e.stopPropagation();
 
-          }else if(playerPosition.value == "GK"){
-            playerPace.value = plyr.diving;
-            playerShooting.value = plyr.handling;
-            playerPassing.value = plyr.kicking;
-            playerDribbling.value = plyr.reflexes;
-            playerDefending.value = plyr.speed;
-            playerPhysical.value = plyr.positioning;
-          }
+        if (!validatePlayerData()) {
+          return;
+        }
 
+        plyr.name = playerName.value;
+        plyr.position = playerPosition.value;
+        plyr.photo = playerPhoto.value;
+        plyr.flag = playerFlag.value;
+        plyr.logo = playerLogo.value;
+        plyr.nationality = playerNationality.value;
+        plyr.club = playerClub.value;
+        plyr.rating = parseInt(playerRating.value);
 
-          editplayerbtn.addEventListener("click",function(e){
+        if (playerPosition.value != "GK") {
+          plyr.pace = parseInt(playerPace.value);
+          plyr.shooting = parseInt(playerShooting.value);
+          plyr.passing = parseInt(playerPassing.value);
+          plyr.dribbling = parseInt(playerDribbling.value);
+          plyr.defending = parseInt(playerDefending.value);
+          plyr.physical = parseInt(playerPhysical.value);
+        } else if (playerPosition.value == "GK") {
+          plyr.diving = parseInt(playerPace.value);
+          plyr.handling = parseInt(playerShooting.value);
+          plyr.kicking = parseInt(playerPassing.value);
+          plyr.reflexes = parseInt(playerDribbling.value);
+          plyr.speed = parseInt(playerDefending.value);
+          plyr.positioning = parseInt(playerPhysical.value);
+        }
 
-            console.log(element);
-            e.preventDefault();
-            e.stopPropagation();
-
-
-            const powers = [
-              playerRating.value,
-              playerPace.value,
-              playerShooting.value,
-              playerPassing.value,
-              playerDribbling.value,
-              playerDefending.value,
-              playerPhysical.value,
-            ];
-          
-            let rejectname = document.getElementById('rejectname');
-            let rejectclub = document.getElementById('rejectclub');
-            let rejectphoto = document.getElementById('rejectphoto');
-            let rejectlogo = document.getElementById('rejectlogo');
-            let rejectflag = document.getElementById('rejectflag');
-            let rejectpower = document.getElementById('rejectpower');
-            let rejectnationality = document.getElementById('rejectnationality');
-          
-            rejectname.innerHTML = ``; rejectclub.innerHTML = ``;  rejectphoto.innerHTML = ``;  rejectlogo.innerHTML = ``;  rejectflag.innerHTML = ``;
-            rejectpower.innerHTML = ``;  rejectnationality.innerHTML = ``;
-          
-            if (!playerName.value || /[0-9]/.test(playerName.value)) {
-              rejectname.innerHTML += `<p class="text-red-600">Name incorrect</p>`
-              return;
-            }
-          
-            if (!playerPhoto.value) {
-              rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-              return;
-            }
-          
-            if (!playerNationality.value || /[0-9]/.test(playerNationality.value)) {
-              rejectnationality.innerHTML += `<p class="text-red-600">Nationality incorrect</p>`
-              return;
-            }
-          
-            if (!playerFlag.value ) {
-              rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-              return;
-            }
-          
-            if (!playerClub.value || /[0-9]/.test(playerClub.value)) {
-              rejectclub.innerHTML += `<p class="text-red-600">Club incorrect</p>`
-              return;
-            }
-          
-            if (!playerLogo.value) {
-              rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-              return;
-            }
-          
-            for (const power of powers) {
-              if (power === '' || isNaN(power) || power < 0 || power > 100) {
-                rejectpower.innerHTML += `<p class="text-red-600">power values between 0-100</p>`
-                return;
-              }
-            }
-            
-             plyr.name = playerName.value;
-             plyr.position = playerPosition.value;
-             plyr.photo = playerPhoto.value;
-             plyr.flag = playerFlag.value;
-             plyr.logo = playerLogo.value;
-             plyr.nationality = playerNationality.value;
-             plyr.club = playerClub.value;
-             plyr.rating = parseInt(playerRating.value);
-
-             if(playerPosition.value != "GK"){
-              plyr.pace = parseInt(playerPace.value);
-              plyr.shooting = parseInt(playerShooting.value);
-              plyr.passing = parseInt(playerPassing.value) ;
-              plyr.dribbling = parseInt(playerDribbling.value);
-              plyr.defending = parseInt(playerDefending.value) ;
-              plyr.physical = parseInt(playerPhysical.value);
-  
-  
-            }else if(playerPosition.value == "GK"){
-              plyr.diving = parseInt(playerPace.value);
-              plyr.handling = parseInt(playerShooting.value);
-              plyr.kicking = parseInt(playerPassing.value);
-              plyr.reflexes = parseInt(playerDribbling.value);
-              plyr.speed  = parseInt(playerDefending.value);
-              plyr.positioning = parseInt(playerPhysical.value);
-            }
-            localStorage.setItem("players", JSON.stringify(dataplayers));
-            PlayerModal.classList.add("hidden");
-            displayAllPlayers(dataplayers.players);
-          })
-        })
-      })
+        localStorage.setItem("players", JSON.stringify(dataplayers));
+        PlayerModal.classList.add("hidden");
+        displayAllPlayers(dataplayers.players);
+      });
+    });
+  });
 }
 
 
@@ -364,72 +376,15 @@ closeModal.addEventListener('click', function(){
 
 
 addplayerbtn.addEventListener('click', function (e) {
-   
   e.preventDefault();
 
-  const name = playerName.value;
-  const powers = [
-    playerRating.value,
-    playerPace.value,
-    playerShooting.value,
-    playerPassing.value,
-    playerDribbling.value,
-    playerDefending.value,
-    playerPhysical.value,
-  ];
-
-  let rejectname = document.getElementById('rejectname');
-  let rejectclub = document.getElementById('rejectclub');
-  let rejectphoto = document.getElementById('rejectphoto');
-  let rejectlogo = document.getElementById('rejectlogo');
-  let rejectflag = document.getElementById('rejectflag');
-  let rejectpower = document.getElementById('rejectpower');
-  let rejectnationality = document.getElementById('rejectnationality');
-
-  rejectname.innerHTML = ``; rejectclub.innerHTML = ``;  rejectphoto.innerHTML = ``;  rejectlogo.innerHTML = ``;  rejectflag.innerHTML = ``;
-  rejectpower.innerHTML = ``;  rejectnationality.innerHTML = ``;
-
-  if (!name || /[0-9]/.test(name)) {
-    rejectname.innerHTML += `<p class="text-red-600">Name incorrect</p>`
+  if (!validatePlayerData()) {
     return;
   }
-
-  if (!playerPhoto.value) {
-    rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-    return;
-  }
-
-  if (!playerNationality.value || /[0-9]/.test(playerNationality.value)) {
-    rejectnationality.innerHTML += `<p class="text-red-600">Nationality incorrect</p>`
-    return;
-  }
-
-  if (!playerFlag.value ) {
-    rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-    return;
-  }
-
-  if (!playerClub.value || /[0-9]/.test(playerClub.value)) {
-    rejectclub.innerHTML += `<p class="text-red-600">Club incorrect</p>`
-    return;
-  }
-
-  if (!playerLogo.value) {
-    rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`
-    return;
-  }
-
-  for (const power of powers) {
-    if (power === '' || isNaN(power) || power < 0 || power > 100) {
-      rejectpower.innerHTML += `<p class="text-red-600">power values between 0-100</p>`
-      return;
-    }
-  }
-    // idd  =  data.players.length + 1;
 
   if (playerPosition.value !== 'GK') {
     let newplayer = {
-      id : data.players.length + 1,
+      id: data.players.length + 1,
       name: playerName.value,
       photo: playerPhoto.value,
       position: playerPosition.value,
@@ -449,7 +404,7 @@ addplayerbtn.addEventListener('click', function (e) {
     data.players.push(newplayer);
   } else {
     let newgoalkeeper = {
-      id : data.players.length + 1,
+      id: data.players.length + 1,
       name: playerName.value,
       photo: playerPhoto.value,
       position: playerPosition.value,
@@ -474,7 +429,6 @@ addplayerbtn.addEventListener('click', function (e) {
   displayAllPlayers(dataplayers);
 
   PlayerModal.classList.add('hidden');
-
 });
 
 
