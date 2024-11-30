@@ -53,19 +53,15 @@ fetchPlayers();
 
 let dataplayers = data.players;
 
-
-// console.log(dataplayers);
-
-
-
-let players = document.getElementById("players");
-function displayAllPlayers(dataplayers){
-  players.innerHTML = ``;
+const playerspage =  document.getElementById('playerspage');
+console.log(playerspage);
+function displayAllPlayerspage(dataplayers){
+  playerspage.innerHTML = ``;
   console.log("dataplayers.players : ", dataplayers);
    if(dataplayers.length != 0){
      dataplayers.forEach(element => {
          if(element.position != 'GK'){
-             players.innerHTML += `
+          playerspage.innerHTML += `
                 <div id="cardsplayer" data-display="1" data-id="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
                     
                     <div class="absolute z-10 opacity-0 h-80 w-72 transition-all hover:opacity-100 right-5 top-4 pt-6">
@@ -117,7 +113,7 @@ function displayAllPlayers(dataplayers){
 
              `;
            }else{
-             players.innerHTML += `
+            playerspage.innerHTML += `
              <div id="cardsplayer" data-display="1" data-id ="${element.id}" class="relative w-72 bg-cover bg-center p-4 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
                
                 <div class="absolute z-10 opacity-0 h-80 w-72 transition-all hover:opacity-100 right-5 top-4 pt-6">
@@ -176,8 +172,10 @@ function displayAllPlayers(dataplayers){
    EditPlayer(EditBtn);
    Deleteplayer(deleteBtn);
 }
+displayAllPlayerspage(dataplayers);
 
 
+// console.log(dataplayers);
 
 function EditPlayer(EditBtn) {
       EditBtn.forEach(element=>{
@@ -252,7 +250,7 @@ function EditPlayer(EditBtn) {
             }
             localStorage.setItem("players", JSON.stringify(dataplayers));
             PlayerModal.classList.add("hidden");
-            displayAllPlayers(dataplayers.players);
+            displayAllPlayerspage(dataplayers.players);
           })
         })
       })
@@ -273,7 +271,7 @@ function Deleteplayer(deleteBtn) {
       localStorage.setItem("players", JSON.stringify(dataplayers));
 
       console.log(dataplayers);
-      displayAllPlayers(dataplayers.players);
+      displayAllPlayerspage(dataplayers.players);
       LoadFormation();
     });
   })
@@ -282,7 +280,7 @@ function Deleteplayer(deleteBtn) {
 
 
       
-displayAllPlayers(dataplayers);
+displayAllPlayerspage(dataplayers);
 
 
 
@@ -407,7 +405,7 @@ addplayerbtn.addEventListener('click', function (e) {
 
   localStorage.setItem('players', JSON.stringify(data));
   dataplayers = data.players;
-  displayAllPlayers(dataplayers);
+  displayAllPlayerspage(dataplayers);
 
   PlayerModal.classList.add('hidden');
 
@@ -425,12 +423,6 @@ const positions = {
   RB: 'RB',
   GK: 'GK'
 }
-
-const closebtn = document.getElementById('closebtn');
-closebtn.addEventListener('click', function(){
-  allplayers.classList.add('hidden');
-  formation.classList.remove('hidden');
-});
 
 document.addEventListener('DOMContentLoaded', function() {
   const pace = document.getElementById('p');
@@ -463,143 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
-
-let cardPos;
-let currentTarget;
-
-
-card.forEach(cards => {
-  cards.addEventListener('click', function (e) {
-    formation.classList.add("hidden");
-    allplayers.classList.remove("hidden");
-    currentTarget= e.currentTarget;
-    cardPos = e.currentTarget.dataset.position;
-    const qrr = filtrePosition(cardPos);
-    displayAllPlayers(qrr);
-    ClickCard();
-  });
-});
-
-function filtrePosition(pos){
-  let a = [];
-    dataplayers.players.forEach(element => {
-      let existing = document.querySelector(`#player${element.id}`);
-      console.log(existing);
-      
-      if(existing){
-        return;
-      }
-      if(element.position === pos){
-        a.push(element);
-      }
-    });
-    return a;
-}
-
-let Formation = JSON.parse(localStorage.getItem("Formation")) || [];
-
-function ClickCard(){
-  const cardsplayer = document.querySelectorAll("#cardsplayer");
-  cardsplayer.forEach(element =>{
-    element.addEventListener("click",function(e){
-      let playerdiv =  e.currentTarget.dataset.id;
-      console.log("dataplayerssss : ", dataplayers);
-
-      let foundPlr = dataplayers.players.find(plr => plr.id == playerdiv);      
-      currentTarget.innerHTML = `
-      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-        <!-- Player Rating -->
-        <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
-          ${foundPlr.rating}
-        </div>
-        <!-- Player Position -->
-        <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
-          ${foundPlr.position}
-        </div>
-
-        <!-- Player Image and Info -->
-        <div class="flex flex-col items-center">
-          <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
-
-          <!-- Player Name -->
-          <p id="name" class="text-[8px] font-bold text-center mt-1">
-            ${foundPlr.name}
-          </p>
-        </div>
-        <div class="flex items-center justify-center mt-1 space-x-1">
-          <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
-          <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
-        </div>
-         </div> `;
-
-         let carddiv =  currentTarget.dataset.id;
-           const PlayerObject = {
-              playerFormationId: playerdiv,
-              cardFormationId: carddiv
-            };
-
-             Formation.push(PlayerObject);
-             localStorage.setItem("Formation", JSON.stringify(Formation));
-
-            //  console.log('The Formation : ', Formation);
-            
-         allplayers.classList.add('hidden');
-         formation.classList.remove('hidden');
-         LoadFormation();
-    });
-  })
-}
 dataplayers = JSON.parse(localStorage.getItem("players")) || [];
-
-function LoadFormation() {
-  let form = JSON.parse(localStorage.getItem("Formation"));
-
-  if (form) {
-    form.forEach(f => {
-      const card = document.querySelector(`[data-id="${f.cardFormationId}"]`);
-      let foundPlr = dataplayers.players.find(plr => plr.id == f.playerFormationId);
-
-      if (!foundPlr) {
-        form = form.filter(fItem => fItem.playerFormationId !== f.playerFormationId);
-        localStorage.setItem("Formation", JSON.stringify(form));
-        return;
-      }
-
-      if (card && foundPlr) {
-        card.innerHTML = `
-          <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-            <!-- Player Rating -->
-            <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
-              ${foundPlr.rating}
-            </div>
-            <!-- Player Position -->
-            <div id="position" class="absolute top-7 left-2 mt-1 text-xs font-bold">
-              ${foundPlr.position}
-            </div>
-
-            <!-- Player Image and Info -->
-            <div class="flex flex-col items-center">
-              <img id="photo" src="${foundPlr.photo}" alt="Player" class="w-8 h-12 object-cover mt-4">
-
-              <!-- Player Name -->
-              <p id="name" class="text-[8px] font-bold text-center mt-1">
-                ${foundPlr.name}
-              </p>
-            </div>
-            <div class="flex items-center justify-center mt-1 space-x-1">
-              <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
-              <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
-            </div>
-          </div>
-        `;
-      }
-    });
-  }
-}
-
-LoadFormation();
-
 
 // Hadear Responsive 
 const burgerIcon = document.getElementById("burger-icon");
@@ -608,3 +464,6 @@ const burgerIcon = document.getElementById("burger-icon");
       burgerIcon.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
 });
+
+
+
