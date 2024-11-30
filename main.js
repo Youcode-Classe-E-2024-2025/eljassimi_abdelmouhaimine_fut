@@ -17,6 +17,8 @@ let playerDribbling = document.getElementById('playerDribbling');
 let playerDefending = document.getElementById('playerDefending');
 let playerPhysical = document.getElementById('playerPhysical');
 
+let playerModalTitile = document.getElementById('playerModalTitile');
+
 
 let addplayerbtn = document.getElementById('addplayerbtn');
 let editplayerbtn = document.getElementById('editplayerbtn');
@@ -186,6 +188,7 @@ function EditPlayer(EditBtn) {
           e.stopPropagation()
           let idBtn = parseInt(e.currentTarget.dataset.id);
           PlayerModal.classList.remove('hidden');
+          playerModalTitile.textContent = "Edit Player";
 
           addplayerbtn.classList.add("hidden");
           editplayerbtn.classList.remove("hidden");
@@ -223,6 +226,65 @@ function EditPlayer(EditBtn) {
             console.log(element);
             e.preventDefault();
             e.stopPropagation();
+
+
+            const powers = [
+              playerRating.value,
+              playerPace.value,
+              playerShooting.value,
+              playerPassing.value,
+              playerDribbling.value,
+              playerDefending.value,
+              playerPhysical.value,
+            ];
+          
+            let rejectname = document.getElementById('rejectname');
+            let rejectclub = document.getElementById('rejectclub');
+            let rejectphoto = document.getElementById('rejectphoto');
+            let rejectlogo = document.getElementById('rejectlogo');
+            let rejectflag = document.getElementById('rejectflag');
+            let rejectpower = document.getElementById('rejectpower');
+            let rejectnationality = document.getElementById('rejectnationality');
+          
+            rejectname.innerHTML = ``; rejectclub.innerHTML = ``;  rejectphoto.innerHTML = ``;  rejectlogo.innerHTML = ``;  rejectflag.innerHTML = ``;
+            rejectpower.innerHTML = ``;  rejectnationality.innerHTML = ``;
+          
+            if (!playerName.value || /[0-9]/.test(playerName.value)) {
+              rejectname.innerHTML += `<p class="text-red-600">Name incorrect</p>`
+              return;
+            }
+          
+            if (!playerPhoto.value) {
+              rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`
+              return;
+            }
+          
+            if (!playerNationality.value || /[0-9]/.test(playerNationality.value)) {
+              rejectnationality.innerHTML += `<p class="text-red-600">Nationality incorrect</p>`
+              return;
+            }
+          
+            if (!playerFlag.value ) {
+              rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`
+              return;
+            }
+          
+            if (!playerClub.value || /[0-9]/.test(playerClub.value)) {
+              rejectclub.innerHTML += `<p class="text-red-600">Club incorrect</p>`
+              return;
+            }
+          
+            if (!playerLogo.value) {
+              rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`
+              return;
+            }
+          
+            for (const power of powers) {
+              if (power === '' || isNaN(power) || power < 0 || power > 100) {
+                rejectpower.innerHTML += `<p class="text-red-600">power values between 0-100</p>`
+                return;
+              }
+            }
             
              plyr.name = playerName.value;
              plyr.position = playerPosition.value;
@@ -287,6 +349,8 @@ displayAllPlayers(dataplayers);
 
 
 addplayer.addEventListener('click',function(){
+  console.log(playerModalTitile);
+  playerModalTitile.textContent = "Add Player";
   PlayerModal.classList.remove('hidden');
   editplayerbtn.classList.add("hidden");
   addplayerbtn.classList.remove("hidden");
@@ -330,7 +394,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerPhoto.length === 0) {
+  if (!playerPhoto.value) {
     rejectphoto.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
@@ -340,7 +404,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerFlag.length === 0 ) {
+  if (!playerFlag.value ) {
     rejectflag.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
@@ -350,7 +414,7 @@ addplayerbtn.addEventListener('click', function (e) {
     return;
   }
 
-  if (playerLogo.length === 0) {
+  if (!playerLogo.value) {
     rejectlogo.innerHTML += `<p class="text-red-600">Please select a file!</p>`
     return;
   }
