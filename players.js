@@ -189,6 +189,8 @@ function EditPlayer(EditBtn) {
           editplayerbtn.classList.remove("hidden");
 
           let plyr = dataplayers.players.find(plr => plr.id == idBtn);  
+
+          console.log("plyrrrr : ", plyr);
           
           playerName.value = plyr.name;
           playerPosition.value = plyr.position;

@@ -1,5 +1,8 @@
 # eljassimi_abdelmouhaimine_fut# Ultimate Team Builder Application
 
+ ![App Screenshot](./src/assets/img/website-screen.png)
+ ![App Screenshot](./src/assets/img/website-screen2.png)
+
 Une application interactive pour créer, personnaliser et gérer une équipe FUT (Ultimate Team). L'accent est mis sur une interface utilisateur dynamique, la gestion des données via `localStorage` et une expérience immersive pour les utilisateurs. 
 
 ## 🚀 Fonctionnalités Clés
@@ -8,7 +11,8 @@ Une application interactive pour créer, personnaliser et gérer une équipe FUT
 - Formulaire permettant l'ajout de joueurs avec des champs pour : 
   - Nom
   - Position
-  - Note
+  - club
+  - photo
   - Statistiques et autres détails pertinents
 - Ajout, modification et suppression des joueurs via une interface conviviale.
 
