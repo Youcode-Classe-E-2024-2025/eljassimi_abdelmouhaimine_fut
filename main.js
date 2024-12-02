@@ -502,9 +502,7 @@ card.forEach(cards => {
 function filtrePosition(pos){
   let a = [];
     dataplayers.players.forEach(element => {
-      let existing = document.querySelector(`#player${element.id}`);
-      console.log(existing);
-      
+      let existing = document.querySelector(`#player${element.id}`); 
       if(existing){
         return;
       }
@@ -526,7 +524,7 @@ function ClickCard(){
 
       let foundPlr = dataplayers.players.find(plr => plr.id == playerdiv);      
       currentTarget.innerHTML = `
-      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
+      <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class=" inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
         <!-- Player Rating -->
         <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
           ${foundPlr.rating}
@@ -549,7 +547,7 @@ function ClickCard(){
           <img id="flag" src="${foundPlr.flag}" alt="Flag" class="w-2 h-2">
           <img id="logo" src="${foundPlr.logo}" alt="Logo" class="w-2 h-2">
         </div>
-         </div> `;
+      </div> `;
 
          let carddiv =  currentTarget.dataset.id;
            const PlayerObject = {
@@ -587,7 +585,7 @@ function LoadFormation() {
       if (card && foundPlr) {
         card.innerHTML = `
           <div id="player${foundPlr.id}" data-pos ="${foundPlr.position}" data-id="${foundPlr.id}" class="inteam relative h-28 w-20 bg-cover bg-center p-2 text-black" style="background-image: url('src/assets/img/badge_gold.webp');">
-            <!-- Player Rating -->
+             <!-- Player Rating -->
             <div id="rating" class="absolute top-5 left-2 text-xs font-bold">
               ${foundPlr.rating}
             </div>
